@@ -3,30 +3,23 @@
 
 int main(int argc, char* argv[]) {
 
-    initSDL(Game::window, Game::renderer, SCREEN_WIDTH, SCREEN_HEIGHT, "GAME SDL2");
-
     Uint32 frameStart, frameTime;
 
-    if (game->init()) {
-        while (game->running()) {
-            frameStart = SDL_GetTicks();
+    Game* game = new Game();
 
-            game->handle();
+    while (game->running()) {
+        frameStart = SDL_GetTicks();
 
-            game->update();
+        game->handle();
 
-            game->render();
+        game->update();
 
-            frameTime = SDL_GetTicks() - frameStart;
-            if (PER_FRAME > frameTime) {
-                SDL_Delay(PER_FRAME - frameTime);
-            }
+        game->render();
 
+        frameTime = SDL_GetTicks() - frameStart;
+        if (1000 / FPS > frameTime) {
+            SDL_Delay(1000 / FPS - frameTime);
         }
-    } else {
-        std::cout << "Game initialization failed ...! " << '\n';
-
-        return -1;
     }
 
     game->clean();

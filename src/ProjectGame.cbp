@@ -36,14 +36,23 @@
 		<Unit filename="debug.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="globals.h" />
 		<Unit filename="header.h" />
-		<Unit filename="init.cpp" />
-		<Unit filename="init.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
+		<Unit filename="sound.cpp" />
 		<Unit filename="sound.h" />
+		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.h" />
+		<Unit filename="tilemap.cpp" />
+		<Unit filename="tilemap.h" />
 		<Unit filename="utils.cpp" />
 		<Unit filename="utils.h" />
+		<Unit filename="weapon.cpp" />
+		<Unit filename="weapon.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

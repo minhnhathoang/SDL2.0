@@ -1,0 +1,103 @@
+# depslib dependency file v1.0
+1615469950 source:c:\users\amin\desktop\projectgame\src\debug.cpp
+	"header.h"
+	"debug.h"
+
+1615449752 c:\users\amin\desktop\projectgame\src\header.h
+	<iostream>
+	<chrono>
+	<random>
+	<assert.h>
+	"SDL.h"
+	"SDL_image.h"
+	"SDL_mixer.h"
+	"SDL_ttf.h"
+	"globals.h"
+	"debug.h"
+
+1615397274 c:\users\amin\desktop\projectgame\src\debug.h
+
+1615426343 source:c:\users\amin\desktop\projectgame\src\init.cpp
+	"header.h"
+	"init.h"
+	"debug.h"
+
+1615397690 c:\users\amin\desktop\projectgame\src\init.h
+
+1615523598 source:c:\users\amin\desktop\projectgame\src\utils.cpp
+	"header.h"
+	"utils.h"
+
+1615523584 c:\users\amin\desktop\projectgame\src\utils.h
+
+1615447664 source:c:\users\amin\desktop\projectgame\src\text.cpp
+	"text.h"
+
+1615516807 c:\users\amin\desktop\projectgame\src\text.h
+	"header.h"
+	"texture.h"
+
+1615519584 source:c:\users\amin\desktop\projectgame\src\texture.cpp
+	"texture.h"
+
+1615523458 c:\users\amin\desktop\projectgame\src\globals.h
+
+1615519985 source:c:\users\amin\desktop\projectgame\src\game.cpp
+	"header.h"
+	"game.h"
+
+1615517164 c:\users\amin\desktop\projectgame\src\game.h
+	"header.h"
+	"tilemap.h"
+	"player.h"
+	"enemy.h"
+
+1615478559 source:c:\users\amin\desktop\projectgame\src\main.cpp
+	"header.h"
+	"game.h"
+
+1615450801 source:c:\users\amin\desktop\projectgame\src\sound.cpp
+	"sound.h"
+
+1615392816 c:\users\amin\desktop\projectgame\src\sound.h
+
+1615520500 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
+	"header.h"
+	"tilemap.h"
+
+1615519809 c:\users\amin\desktop\projectgame\src\texture.h
+	"header.h"
+
+1615520414 source:c:\users\amin\desktop\projectgame\src\player.cpp
+	"player.h"
+
+1615518841 c:\users\amin\desktop\projectgame\src\player.h
+	"texture.h"
+	"weapon.h"
+
+1615453467 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
+	"weapon.h"
+
+1615520957 c:\users\amin\desktop\projectgame\src\weapon.h
+	"header.h"
+	"texture.h"
+
+1615520798 c:\users\amin\desktop\projectgame\src\tilemap.h
+	"header.h"
+	"texture.h"
+
+1615516924 source:c:\users\amin\desktop\projectgame\src\enemy.cpp
+	"enemy.h"
+
+1615516960 c:\users\amin\desktop\projectgame\src\enemy.h
+
+1615520064 source:c:\users\amin\desktop\projectgame\src\collision.cpp
+	"collision.h"
+
+1615520056 c:\users\amin\desktop\projectgame\src\collision.h
+
+1615520120 source:c:\users\amin\desktop\projectgame\src\effect.cpp
+	"effect.h"
+
+1615520098 c:\users\amin\desktop\projectgame\src\effect.h
+

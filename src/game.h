@@ -3,25 +3,46 @@
 
 #include "header.h"
 
+#include "tilemap.h"
+#include "player.h"
+#include "enemy.h"
+
 class Game {
 
 public:
     Game();
     ~Game();
 
+    void init();
+
     void handle();
     void update();
     void render();
 
+    void clean();
     void quit();
 
     bool running();
 
-    SDL_Renderer* renderer;
-    SDL_Window* window;
+
+    void updateCamera();
+
 private:
 
+    Player* player;
+    vector<Enemy*> enemies;
+
+    Map* tileMap;
+
+    SDL_Rect camera;
+
     bool isRunning;
+
+    SDL_Renderer* renderer = nullptr;
+    SDL_Window* window = nullptr;
+
+    SDL_Point mouse;
+    bool keyboard[MAX_KEY];
 };
 
 #endif // __game__h

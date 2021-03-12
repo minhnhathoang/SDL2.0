@@ -2,6 +2,6 @@
 #include "debug.h"
 
 void logSDLError(const char* mes) {
-    cerr << ' ' << mes << ' ' << SDL_GetError() << '\n';
+    cerr << mes << ' ' << SDL_GetError() << '\n';
     exit(1);
 }

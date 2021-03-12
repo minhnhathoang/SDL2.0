@@ -11,6 +11,10 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
+#include "globals.h"
+
+#include "debug.h"
+
 using namespace std;
 
 

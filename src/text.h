@@ -2,6 +2,7 @@
 #define __text__h
 
 #include "header.h"
+#include "texture.h"
 
 class Text {
 
@@ -14,6 +15,7 @@ public:
 private:
     TTF_Font* font;
 
+    Texture* text = nullptr;
 };
 
 #endif // __text__h
