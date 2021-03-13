@@ -32,13 +32,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
 		<Unit filename="debug.cpp" />
 		<Unit filename="debug.h" />
+		<Unit filename="effect.cpp" />
+		<Unit filename="effect.h" />
+		<Unit filename="enemy.cpp" />
+		<Unit filename="enemy.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
 		<Unit filename="globals.h" />
 		<Unit filename="header.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="map.txt" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="sound.cpp" />

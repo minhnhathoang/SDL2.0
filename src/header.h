@@ -5,6 +5,7 @@
 #include <chrono>
 #include <random>
 #include <assert.h>
+#include <cstring>
 
 #include "SDL.h"
 #include "SDL_image.h"

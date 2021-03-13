@@ -6,19 +6,44 @@
 
 class Weapon {
 
-public:
-    Weapon();
-    ~Weapon();
+    struct Bullet {
 
-    void render(SDL_Renderer* renderer);
+        double x, y;
+        double dx, dy;
+        double angle;
+        int time;
+
+        Texture* projectile;
+    };
+
+public:
+    Weapon(SDL_Renderer* renderer);
+    ~Weapon() = default;
+
+    void update(SDL_Rect camera, Mouse mouse, int id, SDL_RendererFlip _flip, int _x, int _y);
+
+    void render(SDL_Renderer* renderer, int id);
 
 private:
-    Texture* sprites;
 
+    bool isShooting;
     double angle;
-    SDL_Point point;
-    int ID;
-    int nFrames, currentFrame;
+
+    vector<int> deltaY;
+    vector<SDL_Point> points;
+    vector<int> rate;
+    int x, y;
+    vector<Texture*> sprites;
+
+    vector<pair<int, int>> delay;
+
+    vector<Texture*> projectiles;
+    vector<int> speedBullet;
+    vector<Bullet> bullets;
+
+    SDL_RendererFlip flip;
+
+    int dx, dy;
 };
 
 #endif // __weapon__h

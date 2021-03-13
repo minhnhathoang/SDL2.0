@@ -1,5 +1,5 @@
 #ifndef __debug__h
-#define __debug__
+#define __debug__h
 
 void logSDLError(const char* mes);
 

@@ -38,6 +38,7 @@ void Game::init() {
     tileMap = new Map(renderer);
     player = new Player(renderer);
 
+    memset(keyboard, false, sizeof keyboard);
 
 }
 
@@ -59,10 +60,14 @@ void Game::handle() {
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-
+                if (event.button.button == SDL_BUTTON_LEFT) {
+                    mouse.L = 1;
+                }
                 break;
             case SDL_MOUSEBUTTONUP:
-
+                if (event.button.button == SDL_BUTTON_LEFT) {
+                    mouse.L = 0;
+                }
                 break;
             default:
                 break;
@@ -72,11 +77,9 @@ void Game::handle() {
 }
 
 void Game::update() {
-
-    player->update();
-
     updateCamera();
 
+    player->update(tileMap, camera, keyboard, mouse);
 
 
 }

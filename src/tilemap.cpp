@@ -28,11 +28,20 @@ Map::~Map() {
 void Map::render(SDL_Renderer* renderer, int x, int y) {
     for (int i = 0; i < nWidth; ++i) {
         for (int j = 0; j < nHeight; ++j) {
-
+            // if (tiles[i][j].type != 1) continue;
             SDL_Rect src = { tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].h };
             SDL_Rect dst = { i * 40 - x, j * 40 - y, 40, 40 };
 
             tMap->render(renderer, src, dst);
         }
     }
+}
+
+int Map::getTypeOfTile(int x, int y) {
+    int u = x / 40;
+    int v = y / 40;
+    if (u < 0 || v < 0 || u >= nWidth || v >= nHeight) {
+        return 0;
+    }
+    return tiles[u][v].type;
 }

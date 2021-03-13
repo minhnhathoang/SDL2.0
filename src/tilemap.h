@@ -18,6 +18,9 @@ public:
 
     void render(SDL_Renderer* renderer, int x, int y);
 
+
+    int getTypeOfTile(int x, int y);
+
 private:
 
     vector<vector<Tile>> tiles;
@@ -26,6 +29,5 @@ private:
     int nWidth, nHeight;
 };
 
-int getTypeOfTile(int x, int y);
 
 #endif // __tilemap__h

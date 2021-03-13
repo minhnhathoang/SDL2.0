@@ -2,6 +2,7 @@
 #define __player__h
 
 #include "texture.h"
+#include "tilemap.h"
 #include "weapon.h"
 
 class Player {
@@ -11,7 +12,7 @@ public:
 
     ~Player();
 
-    void update();
+    void update(Map* &tileMap, SDL_Rect camera, bool key[], Mouse mouse);
     void render(SDL_Renderer* renderer);
 
 
@@ -19,7 +20,8 @@ public:
     int getY();
 
 private:
-    int ID;
+    int idCrew;
+    int idGun;
 
     Texture* sprites;
     Weapon* weapon;
@@ -27,10 +29,14 @@ private:
     int nFrames;
 
     int x, y;
+    int dx, dy;
     int moveSpeed;
 
     int rate;
-    int currentFrame;
+
+    bool isMove = 0;
+
+    SDL_RendererFlip flip;
 };
 
 #endif // __player__h

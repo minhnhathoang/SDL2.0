@@ -3,11 +3,12 @@
 	"header.h"
 	"debug.h"
 
-1615449752 c:\users\amin\desktop\projectgame\src\header.h
+1615540018 c:\users\amin\desktop\projectgame\src\header.h
 	<iostream>
 	<chrono>
 	<random>
 	<assert.h>
+	<cstring>
 	"SDL.h"
 	"SDL_image.h"
 	"SDL_mixer.h"
@@ -15,7 +16,7 @@
 	"globals.h"
 	"debug.h"
 
-1615397274 c:\users\amin\desktop\projectgame\src\debug.h
+1615525180 c:\users\amin\desktop\projectgame\src\debug.h
 
 1615426343 source:c:\users\amin\desktop\projectgame\src\init.cpp
 	"header.h"
@@ -37,16 +38,16 @@
 	"header.h"
 	"texture.h"
 
-1615519584 source:c:\users\amin\desktop\projectgame\src\texture.cpp
+1615609030 source:c:\users\amin\desktop\projectgame\src\texture.cpp
 	"texture.h"
 
-1615523458 c:\users\amin\desktop\projectgame\src\globals.h
+1615612807 c:\users\amin\desktop\projectgame\src\globals.h
 
-1615519985 source:c:\users\amin\desktop\projectgame\src\game.cpp
+1615609284 source:c:\users\amin\desktop\projectgame\src\game.cpp
 	"header.h"
 	"game.h"
 
-1615517164 c:\users\amin\desktop\projectgame\src\game.h
+1615571289 c:\users\amin\desktop\projectgame\src\game.h
 	"header.h"
 	"tilemap.h"
 	"player.h"
@@ -56,33 +57,39 @@
 	"header.h"
 	"game.h"
 
-1615450801 source:c:\users\amin\desktop\projectgame\src\sound.cpp
+1615548098 source:c:\users\amin\desktop\projectgame\src\sound.cpp
 	"sound.h"
 
-1615392816 c:\users\amin\desktop\projectgame\src\sound.h
+1615548095 c:\users\amin\desktop\projectgame\src\sound.h
+	"header.h"
 
-1615520500 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
+1615611732 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
 	"header.h"
 	"tilemap.h"
 
-1615519809 c:\users\amin\desktop\projectgame\src\texture.h
+1615608999 c:\users\amin\desktop\projectgame\src\texture.h
 	"header.h"
 
-1615520414 source:c:\users\amin\desktop\projectgame\src\player.cpp
+1615609377 source:c:\users\amin\desktop\projectgame\src\player.cpp
 	"player.h"
+	"utils.h"
+	"tilemap.h"
 
-1615518841 c:\users\amin\desktop\projectgame\src\player.h
+1615609280 c:\users\amin\desktop\projectgame\src\player.h
 	"texture.h"
+	"tilemap.h"
 	"weapon.h"
 
-1615453467 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
+1615611870 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
+	"header.h"
+	"utils.h"
 	"weapon.h"
 
-1615520957 c:\users\amin\desktop\projectgame\src\weapon.h
+1615609338 c:\users\amin\desktop\projectgame\src\weapon.h
 	"header.h"
 	"texture.h"
 
-1615520798 c:\users\amin\desktop\projectgame\src\tilemap.h
+1615527503 c:\users\amin\desktop\projectgame\src\tilemap.h
 	"header.h"
 	"texture.h"
 
