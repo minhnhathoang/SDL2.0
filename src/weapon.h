@@ -40,6 +40,7 @@ private:
     vector<Texture*> projectiles;
     vector<int> speedBullet;
     vector<Bullet> bullets;
+    vector<double> scales;
 
     SDL_RendererFlip flip;
 

@@ -11,8 +11,9 @@ Weapon::Weapon(SDL_Renderer* renderer) {
     delay.resize(MAX_GUN);
     projectiles.resize(MAX_GUN);
     speedBullet.resize(MAX_GUN);
+    scales.resize(MAX_GUN);
 
-    int id = RIFLE;
+    int id = 0;
     sprites[id] = new Texture(renderer, listGun[id], 6);
     rate[id] = 60;
     deltaY[id] = 0;
@@ -20,6 +21,77 @@ Weapon::Weapon(SDL_Renderer* renderer) {
     delay[id] = { 10, 10 };
     projectiles[id] = new Texture(renderer, listBullet[id], 1);
     speedBullet[id] = 30;
+    scales[id] = 0.35;
+
+    id = 1;
+    sprites[id] = new Texture(renderer, listGun[id], 5);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 10, 10 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.9;
+
+    id = 2;
+    sprites[id] = new Texture(renderer, listGun[id], 5);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 30, 30 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.8;
+
+    id = 3;
+    sprites[id] = new Texture(renderer, listGun[id], 6);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 7, 7 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.8;
+
+    id = 4;
+    sprites[id] = new Texture(renderer, listGun[id], 6);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 7, 7 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.8;
+
+    id = 5;
+    sprites[id] = new Texture(renderer, listGun[id], 6);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 7, 7 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.8;
+
+    id = 6;
+    sprites[id] = new Texture(renderer, listGun[id], 6);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 7, 7 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.8;
+
+    id = 7;
+    sprites[id] = new Texture(renderer, listGun[id], 6);
+    rate[id] = 60;
+    deltaY[id] = 0;
+    points[id] = {sprites[id]->getFrame(0).w / 2, sprites[id]->getFrame(0).h / 2};
+    delay[id] = { 7, 7 };
+    projectiles[id] = new Texture(renderer, listBullet[id], 1);
+    speedBullet[id] = 30;
+    scales[id] = 0.7;
 }
 
 void Weapon::update(SDL_Rect camera, Mouse mouse, int id, SDL_RendererFlip _flip, int _x, int _y) {
@@ -73,5 +145,5 @@ void Weapon::render(SDL_Renderer* renderer, int id) {
     if (isShooting) {
         currentFrame = (SDL_GetTicks() * rate[id] / 1000) % sprites[id]->nFrames;
     }
-    sprites[id]->renderEx(renderer, x - dx, y - dy, sprites[id]->getFrame(currentFrame), angle, points[id], flip, 0.35);
+    sprites[id]->renderEx(renderer, x - dx, y - dy, sprites[id]->getFrame(currentFrame), angle, points[id], flip, scales[id]);
 }

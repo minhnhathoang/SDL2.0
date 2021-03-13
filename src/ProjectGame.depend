@@ -38,10 +38,10 @@
 	"header.h"
 	"texture.h"
 
-1615609030 source:c:\users\amin\desktop\projectgame\src\texture.cpp
+1615625365 source:c:\users\amin\desktop\projectgame\src\texture.cpp
 	"texture.h"
 
-1615612807 c:\users\amin\desktop\projectgame\src\globals.h
+1615623830 c:\users\amin\desktop\projectgame\src\globals.h
 
 1615609284 source:c:\users\amin\desktop\projectgame\src\game.cpp
 	"header.h"
@@ -53,7 +53,7 @@
 	"player.h"
 	"enemy.h"
 
-1615478559 source:c:\users\amin\desktop\projectgame\src\main.cpp
+1615650312 source:c:\users\amin\desktop\projectgame\src\main.cpp
 	"header.h"
 	"game.h"
 
@@ -70,7 +70,7 @@
 1615608999 c:\users\amin\desktop\projectgame\src\texture.h
 	"header.h"
 
-1615609377 source:c:\users\amin\desktop\projectgame\src\player.cpp
+1615645261 source:c:\users\amin\desktop\projectgame\src\player.cpp
 	"player.h"
 	"utils.h"
 	"tilemap.h"
@@ -80,12 +80,12 @@
 	"tilemap.h"
 	"weapon.h"
 
-1615611870 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
+1615625086 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
 	"header.h"
 	"utils.h"
 	"weapon.h"
 
-1615609338 c:\users\amin\desktop\projectgame\src\weapon.h
+1615616205 c:\users\amin\desktop\projectgame\src\weapon.h
 	"header.h"
 	"texture.h"
 

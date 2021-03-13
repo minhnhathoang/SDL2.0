@@ -20,7 +20,7 @@ Player::Player(SDL_Renderer* renderer) {
 
     isMove = 0;
 
-    idGun = RIFLE;
+    idGun = 0;
     weapon = new Weapon(renderer);
 }
 

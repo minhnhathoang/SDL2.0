@@ -71,18 +71,39 @@ static const char* listDeath[] = { "assets/images/die/die_blue.png",
 
 enum {
     RIFLE,
+    M4A1,
     PISTOL,
 
-    MAX_GUN
+    MAX_GUN = 100
 };
 
-static const char* listGun[] { "assets/images/gun/1.png",
+static const char* listGun[] {
+    "assets/images/gun/1.png",
+    "assets/images/gun/2.png",
+    "assets/images/gun/3.png",
+    "assets/images/gun/4.png",
+    "assets/images/gun/5.png",
+    "assets/images/gun/6.png",
+    "assets/images/gun/7.png",
+    "assets/images/gun/8.png",
+    "assets/images/gun/9.png",
+    "assets/images/gun/10.png",
+    "assets/images/gun/11.png",
+};
 
-                             };
-
-static const char* listBullet[] { "assets/images/bullet/1.png",
-
-                                };
+static const char* listBullet[] {
+    "assets/images/bullet/1.png",
+    "assets/images/bullet/2.png",
+    "assets/images/bullet/3.png",
+    "assets/images/bullet/4.png",
+    "assets/images/bullet/5.png",
+    "assets/images/bullet/6.png",
+    "assets/images/bullet/7.png",
+    "assets/images/bullet/8.png",
+    "assets/images/bullet/9.png",
+    "assets/images/bullet/10.png",
+    "assets/images/bullet/11.png",
+};
 
 struct Mouse {
     int x, y, L, R;
