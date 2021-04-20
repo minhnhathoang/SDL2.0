@@ -44,12 +44,15 @@
 		<Unit filename="game.h" />
 		<Unit filename="globals.h" />
 		<Unit filename="header.h" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="map.txt" />
+		<Unit filename="mapmod.txt" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
 		<Unit filename="sound.cpp" />
 		<Unit filename="sound.h" />
+		<Unit filename="structs.h" />
 		<Unit filename="text.cpp" />
 		<Unit filename="text.h" />
 		<Unit filename="texture.cpp" />

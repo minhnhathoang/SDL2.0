@@ -1,17 +1,24 @@
 #ifndef __globals__h
 #define __globals__h
 
-const int SCREEN_WIDTH = 1300;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 1366;
+const int SCREEN_HEIGHT = 768;
 
-const int TILE_WIDTH = 32;
-const int TILE_HEIGHT = 32;
+const int TILE_WIDTH = 16;
+const int TILE_HEIGHT = 16;
 
 const int FPS = 60;
 
 const int MAX_KEY = 400;
 
 const double PI = acos(-1);
+
+enum {
+    PLAY,
+    CONTINUE,
+    RESTART,
+    QUIT
+};
 
 
 enum {
@@ -31,7 +38,7 @@ enum {
     WHITE,
     YELLOW,
     BOSS,
-    MAX_CREW = 15,
+    MAX_CREW = 16,
 };
 
 static const char* listCrew[] = { "assets/images/sprites/blue.png",
@@ -67,6 +74,7 @@ static const char* listDeath[] = { "assets/images/die/die_blue.png",
                                    "assets/images/die/die_tan.png",
                                    "assets/images/die/die_white.png",
                                    "assets/images/die/die_yellow.png",
+                                   "assets/images/die/die_boss.png",
                                  };
 
 enum {
@@ -89,10 +97,11 @@ static const char* listGun[] {
     "assets/images/gun/9.png",
     "assets/images/gun/10.png",
     "assets/images/gun/11.png",
+    "assets/images/gun/12.png",
 };
 
-static const char* listBullet[] {
-    "assets/images/bullet/1.png",
+static const char* listAmmo[] {
+    "assets/images/bullet/0.png",
     "assets/images/bullet/2.png",
     "assets/images/bullet/3.png",
     "assets/images/bullet/4.png",
@@ -104,6 +113,35 @@ static const char* listBullet[] {
     "assets/images/bullet/10.png",
     "assets/images/bullet/11.png",
 };
+
+static const char* listLight[] {
+    "assets/images/light/1.png",
+    "assets/images/light/2.png",
+    "assets/images/light/3.png",
+    "assets/images/light/4.png",
+    "assets/images/light/5.png",
+    "assets/images/light/6.png",
+    "assets/images/light/7.png",
+};
+
+static const SDL_Color listColor[] = {
+    { 19, 47, 210 },
+    { 113, 73, 30 },
+    { 43, 45, 46 },
+    { 84, 239, 212 },
+    { 43, 146, 88},
+    { 27, 128, 53 },
+    { 118, 255, 3 },
+    { 77, 234, 52 },
+    { 240, 123, 12 },
+    { 243, 82, 188 },
+    { 90, 55, 146 },
+    { 225, 21, 21 },
+    { 143, 129, 134 },
+    { 202, 211, 213 },
+    { 243, 246, 88 }
+};
+
 
 struct Mouse {
     int x, y, L, R;

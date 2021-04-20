@@ -1,90 +1,89 @@
 #include "texture.h"
+#include "game.h"
 
-Texture::Texture(SDL_Renderer* renderer, const char* fileName) {
-    texture = IMG_LoadTexture(renderer, fileName);
-    if (texture == NULL) {
+Texture::Texture() {
+    //renderer = Game::getIn->getRenderer();
+}
+
+void Texture::load(string ID, int row, int col) {
+
+    if (textureMap.find(ID) != textureMap.end()) {
+        return;
+    }
+
+    textureData u;
+
+    u.texture = IMG_LoadTexture(renderer, ID.c_str());
+
+    if (u.texture == nullptr) {
+        cout << ID << " ";
         logSDLError("Load Texture");
     }
-}
 
-Texture::Texture(SDL_Renderer* renderer, const char* fileName, int _nFrames) {
-    texture = IMG_LoadTexture(renderer, fileName);
-    if (texture == NULL) {
-        logSDLError("Load Texture");
-    }
+    SDL_QueryTexture(u.texture, 0, 0, &u.width, &u.height);
 
-    nFrames = _nFrames;
-    frames.resize(nFrames);
+    u.nFrames = row * col;
+    u.width /= col;
+    u.height /= row;
+    u.col = col;
+    u.row = row;
 
-    int width, height;
-
-    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
-
-    for (int i = 0; i < nFrames; ++i) {
-        frames[i].x = i * width / nFrames;
-        frames[i].y = 0;
-        frames[i].w = width / nFrames;
-        frames[i].h = height;
-    }
+    textureMap[ID] = u;
 
 }
 
-SDL_Texture* Texture::getTexture() {
-    return texture;
-}
+void Texture::render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip, float scale) {
 
-void Texture::render(SDL_Renderer* renderer) {
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
-}
+    SDL_Rect src, dst;
 
-void Texture::render(SDL_Renderer* renderer, int x, int y, SDL_Rect src) {
-    SDL_Rect dst;
-    dst.x = x - src.w / 2;
-    dst.y = y - src.h / 2;
-    dst.w = src.w;
-    dst.h = src.h;
-    SDL_RenderCopy(renderer, texture, &src, &dst);
-}
+    textureData& temp = textureMap[ID];
 
-void Texture::render(SDL_Renderer* renderer, SDL_Rect src, SDL_Rect dst) {
-    SDL_RenderCopy(renderer, texture, &src, &dst);
-}
+    src.x = (currentFrames % temp.col);
+    if (src.x == 0) src.x = temp.col;
+    src.x = (src.x - 1) * temp.width;
+    src.y = (ceil(currentFrames * 1.0f / temp.col) - 1) * temp.height;
+    src.w = temp.width;
+    src.h = temp.height;
 
-void Texture::renderEx(SDL_Renderer* renderer, int x, int y, int w, int h, double angle) {
-    SDL_Rect dst;
-
-    dst.x = x - w / 2;
-    dst.y = y - h / 2;
-    dst.w = w;
-    dst.h = h;
-
-    SDL_RenderCopyEx(renderer, texture, NULL, &dst, angle, NULL, SDL_FLIP_NONE);
-}
-
-void Texture::renderEx(SDL_Renderer* renderer, int x, int y, SDL_Rect src, double angle, SDL_Point point, SDL_RendererFlip flip) {
-    SDL_Rect dst;
-
-    dst.x = x - src.w / 2;
-    dst.y = y - src.h / 2;
-    dst.w = src.w;
-    dst.h = src.h;
-
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, &point, flip);
-}
-
-void Texture::renderEx(SDL_Renderer* renderer, int x, int y, SDL_Rect src, double angle, SDL_Point point, SDL_RendererFlip flip, double scale) {
-    SDL_Rect dst;
-
-    dst.w = scale * src.w;
-    dst.h = scale * src.h;
-
+    dst.w = temp.width * scale;
+    dst.h = temp.height * scale;
     dst.x = x - dst.w / 2;
     dst.y = y - dst.h / 2;
 
-
-    SDL_RenderCopyEx(renderer, texture, &src, &dst, angle, NULL, flip);
+    SDL_RenderCopyEx(renderer, temp.texture, &src, &dst, angle, NULL, flip);
 }
 
-SDL_Rect Texture::getFrame(int id) {
-    return frames[id];
+void Texture::render(string ID, SDL_Rect src, SDL_Rect dst) {
+    textureData& temp = textureMap[ID];
+
+    SDL_RenderCopy(renderer, temp.texture, &src, &dst);
 }
+
+void Texture::render(string ID, int x, int y) {
+    textureData& temp = textureMap[ID];
+    SDL_Rect dst;
+    dst.x = x - temp.width / 2;
+    dst.y = y - temp.height / 2;
+    dst.w = temp.width;
+    dst.h = temp.height;
+    SDL_RenderCopy(renderer, temp.texture, 0, &dst);
+}
+
+void Texture::render(string ID) {
+    textureData& temp = textureMap[ID];
+
+    SDL_RenderCopy(renderer, temp.texture, 0, 0);
+}
+
+void Texture::setRenderer(SDL_Renderer* _renderer) {
+    renderer = _renderer;
+}
+
+SDL_Renderer* Texture::getRenderer() {
+    return renderer;
+}
+
+SDL_Texture* Texture::getTexture(string ID) {
+    return textureMap[ID].texture;
+}
+

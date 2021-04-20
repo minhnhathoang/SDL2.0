@@ -3,48 +3,59 @@
 
 #include "header.h"
 #include "texture.h"
+#include "structs.h"
+
+struct Gun {
+    int ID;
+    pair<int, int> reloadTime;
+    pair<int, int> delayTime;
+
+    int magazineAmmo;
+    int reserveAmmo;
+    int maxAmmo;
+
+    int projectileID;
+    int soundID;
+    int effectID;
+
+
+    int frameRate;
+
+    float velocity;
+
+    float scaleFrame;
+
+    int nFrames;
+};
 
 class Weapon {
 
-    struct Bullet {
-
-        double x, y;
-        double dx, dy;
-        double angle;
-        int time;
-
-        Texture* projectile;
-    };
-
 public:
-    Weapon(SDL_Renderer* renderer);
-    ~Weapon() = default;
+    Weapon();
 
-    void update(SDL_Rect camera, Mouse mouse, int id, SDL_RendererFlip _flip, int _x, int _y);
+    void initGun(int ID);
 
-    void render(SDL_Renderer* renderer, int id);
+    void update(int _x, int _y, int x_dst, int y_dst, float angle, bool _shooting, SDL_RendererFlip _flip);
+    void render(SDL_Rect& camera);
 
-private:
+    void reload();
 
-    bool isShooting;
-    double angle;
+    pair<int, int> getAmmunition();
 
-    vector<int> deltaY;
-    vector<SDL_Point> points;
-    vector<int> rate;
+
     int x, y;
-    vector<Texture*> sprites;
-
-    vector<pair<int, int>> delay;
-
-    vector<Texture*> projectiles;
-    vector<int> speedBullet;
-    vector<Bullet> bullets;
-    vector<double> scales;
+    float angle;
 
     SDL_RendererFlip flip;
 
-    int dx, dy;
+    int currentGun;
+    bool shooting;
+
+    vector<Gun> guns;
+    vector<Bullet> bullets;
+
+private:
+
 };
 
 #endif // __weapon__h

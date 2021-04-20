@@ -5,31 +5,46 @@
 
 class Texture {
 
+    struct textureData {
+        SDL_Texture* texture;
+        int nFrames;
+        int width, height;
+        int row, col;
+    };
+
+    map<string, textureData> textureMap;
+
+    Texture();
+
 public:
-    Texture(SDL_Renderer* renderer, const char* fileName);
-    Texture(SDL_Renderer* renderer, const char* fileName, int _nFrames);
-    ~Texture();
 
-    void render(SDL_Renderer* renderer);
-    void render(SDL_Renderer* renderer, SDL_Rect src, SDL_Rect dst);
-    void render(SDL_Renderer* renderer, int x, int y, SDL_Rect src);
-    void render(SDL_Renderer* renderer, int x, int y, int w, int h);
+    static Texture* getInstance() {
+        static Texture* instance;
+        if (instance == nullptr) {
+            instance = new Texture();
+        }
+        return instance;
+    }
 
-    void renderEx(SDL_Renderer* renderer, int x, int y, int w, int h, double angle);
-    void renderEx(SDL_Renderer* renderer, int x, int y, SDL_Rect src, double angle, SDL_Point point, SDL_RendererFlip flip);
-    void renderEx(SDL_Renderer* renderer, int x, int y, SDL_Rect src, double angle, SDL_Point point, SDL_RendererFlip flip, double scale);
+    void setRenderer(SDL_Renderer* _renderer);
+    SDL_Texture* getTexture(string ID);
 
-    SDL_Texture* getTexture();
+    void load(string ID, int row, int col);
 
-    SDL_Rect getFrame(int id);
+    void render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip = SDL_FLIP_NONE, float scale = 1.0f);
 
+    void render(string ID, SDL_Rect src, SDL_Rect dst);
 
-    int nFrames;
+    void render(string ID, int x, int y);
+
+    void render(string ID);
+
+    SDL_Renderer* getRenderer();
 
 private:
-    SDL_Texture* texture;
 
-    vector<SDL_Rect> frames;
+    SDL_Renderer* renderer;
+
 };
 
 #endif // __texture__h

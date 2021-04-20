@@ -1,28 +1,39 @@
-#include "header.h"
 #include "game.h"
 
 int main(int argc, char* argv[]) {
 
     Uint32 frameStart, frameTime;
 
-    Game* game = new Game();
+    while (true) {
 
-    while (game->running()) {
-        frameStart = SDL_GetTicks();
+        if (Game::getInstance()->restarting() == true) {
+            delete Game::getInstance()->player;
+            Game::getInstance()->init();
+        } else {
+            Game::getInstance()->menu(0);
+        }
 
-        game->handle();
+        while (Game::getInstance()->running()) {
+            frameStart = SDL_GetTicks();
 
-        game->update();
+            Game::getInstance()->handle();
 
-        game->render();
+            Game::getInstance()->update();
 
-        frameTime = SDL_GetTicks() - frameStart;
-        if (1000 / FPS > frameTime) {
-            SDL_Delay(1000 / FPS - frameTime);
+            Game::getInstance()->render();
+
+            frameTime = SDL_GetTicks() - frameStart;
+
+            if (1000 / FPS > frameTime) {
+                SDL_Delay(1000 / FPS - frameTime);
+            }
+        }
+
+        if (Game::getInstance()->restarting() == false) {
+            Game::getInstance()->clean();
+            break;
         }
     }
-
-    game->clean();
 
     return 0;
 }

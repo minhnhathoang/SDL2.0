@@ -5,14 +5,27 @@
 
 class Sound {
 
+
+
 public:
+
+    static Sound* getInstance() {
+        static Sound* instance;
+        if (instance == nullptr) {
+            instance = new Sound();
+        }
+        return instance;
+    }
+
     Sound();
 
+    void playMusic();
+    void playChunks(int id, int channel);
 
 private:
 
-    Mix_Music* bMusic;
-    Mix_Chunk* samples[5];
+    Mix_Music* music;
+    vector<Mix_Chunk*> chunks;
 };
 
 

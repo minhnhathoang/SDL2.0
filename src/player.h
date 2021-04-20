@@ -4,33 +4,44 @@
 #include "texture.h"
 #include "tilemap.h"
 #include "weapon.h"
+#include "sound.h"
+#include "effect.h"
 
 class Player {
 
 public:
-    Player(SDL_Renderer* renderer);
+    Player();
 
-    ~Player();
+    ~Player() = default;
 
-    void update(Map* &tileMap, SDL_Rect camera, bool key[], Mouse mouse);
-    void render(SDL_Renderer* renderer);
-
+    void update(SDL_Rect& camera, bool key[], Mouse mouse);
+    void render(SDL_Rect& camera);
 
     int getX();
     int getY();
+    int getHP();
+    int getOxy();
+    int getCoin();
+    void addHP(int delta);
 
-private:
-    int idCrew;
-    int idGun;
+    string getID();
 
-    Texture* sprites;
+    int getIDGun();
+
+    pair<int, int> getAmmunition();
+
     Weapon* weapon;
+    int idCrew;
+private:
+    int idGun;
 
     int nFrames;
 
     int x, y;
     int dx, dy;
     int moveSpeed;
+
+    int hp, oxy, coin;
 
     int rate;
 

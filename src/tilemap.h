@@ -9,24 +9,38 @@ class Map {
     struct Tile {
         int x, y, w, h;
         int type;
+        int id;
     };
 
 public:
 
-    Map(SDL_Renderer* renderer);
-    ~Map();
+    static Map* getInstance() {
+        static Map* instance;
+        if (instance == nullptr) {
+            instance = new Map();
+        }
+        return instance;
+    }
 
-    void render(SDL_Renderer* renderer, int x, int y);
+    Map();
+
+    void render(SDL_Rect camera);
+
+    void addEdge(int u, int v);
 
 
     int getTypeOfTile(int x, int y);
+    int getTile(int x, int y);
 
-private:
 
     vector<vector<Tile>> tiles;
 
-    Texture* tMap;
+    vector<vector<int>> adj;
+
+    string mapID;
     int nWidth, nHeight;
+private:
+
 };
 
 
