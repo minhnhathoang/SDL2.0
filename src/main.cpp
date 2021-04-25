@@ -7,7 +7,6 @@ int main(int argc, char* argv[]) {
     while (true) {
 
         if (Game::getInstance()->restarting() == true) {
-            delete Game::getInstance()->player;
             Game::getInstance()->init();
         } else {
             Game::getInstance()->menu(0);
@@ -27,13 +26,15 @@ int main(int argc, char* argv[]) {
             if (1000 / FPS > frameTime) {
                 SDL_Delay(1000 / FPS - frameTime);
             }
+            //cout << frameTime << endl;
         }
 
         if (Game::getInstance()->restarting() == false) {
-            Game::getInstance()->clean();
             break;
         }
     }
+
+    Game::getInstance()->clean();
 
     return 0;
 }

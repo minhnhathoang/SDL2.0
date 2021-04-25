@@ -32,6 +32,8 @@ public:
     int getTypeOfTile(int x, int y);
     int getTile(int x, int y);
 
+    void release();
+
 
     vector<vector<Tile>> tiles;
 

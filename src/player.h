@@ -12,8 +12,8 @@ class Player {
 public:
     Player();
 
-    ~Player() = default;
 
+    void init();
     void update(SDL_Rect& camera, bool key[], Mouse mouse);
     void render(SDL_Rect& camera);
 
@@ -42,6 +42,7 @@ private:
     int moveSpeed;
 
     int hp, oxy, coin;
+    int energySpotlight;
 
     int rate;
 

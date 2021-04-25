@@ -31,6 +31,8 @@ public:
     void update();
     void render();
 
+    void endgame();
+
     void menu(int type);
     void renderHUD();
 
@@ -45,16 +47,14 @@ public:
 
     SDL_Renderer* getRenderer();
 
-    Player* player;
+    Player* player = nullptr;
 private:
-    Item* item;
 
     vector<Enemy*> enemies;
 
 
     SDL_Rect camera;
 
-    bool isRunning;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -63,6 +63,9 @@ private:
     bool keyboard[MAX_KEY];
 
     bool isRestarting = 0;
+    bool isRunning;
+
+    int status;
 
 };
 

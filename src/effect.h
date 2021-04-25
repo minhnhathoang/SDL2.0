@@ -27,7 +27,6 @@ static const char* listEffect[] {
 
 class Effect {
 
-
 public:
 
     static Effect* getInstance() {
@@ -47,10 +46,11 @@ public:
     void renderDeaths(SDL_Rect camera);
 
     void shake(SDL_Rect& camera, int delta);
+    void redScreen();
 
     void update();
 
-
+    void release();
 
 
 private:

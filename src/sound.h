@@ -22,6 +22,8 @@ public:
     void playMusic();
     void playChunks(int id, int channel);
 
+    void release();
+
 private:
 
     Mix_Music* music;

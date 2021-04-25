@@ -4,10 +4,10 @@
 Effect::Effect() {
     deaths.clear();
     explosions.clear();
-    frames.resize(100);
-    scales.resize(100);
-    rates.resize(100);
-    times.resize(100);
+    frames.resize(20);
+    scales.resize(20);
+    rates.resize(20);
+    times.resize(20);
 
     for (int i = 0; i < MAX_CREW; ++i) {
         deathsID.push_back(string(listDeath[i]));
@@ -27,12 +27,13 @@ Effect::Effect() {
     Texture::getInstance()->load(listEffect[9], 2, 4), frames[9] = 8, scales[9] = 0.7, rates[9] = 60, times[9] = 5;
     Texture::getInstance()->load(listEffect[10], 1, 8), frames[10] = 8, scales[10] = 1, rates[10] = 30, times[10] = 10;
     //Texture::getInstance()->load(listEffect[11], 4, 4), frames[11] = 8, scales[11] = 1, rates[11] = 30, times[11] = 10;
-    Texture::getInstance()->load(listEffect[12], 7, 4), frames[12] = 27, scales[12] = 1, rates[12] = 15, times[12] = 90;
+    Texture::getInstance()->load(listEffect[12], 7, 4), frames[12] = 27, scales[12] = 5, rates[12] = 15, times[12] = 90;
     SDL_SetTextureBlendMode(Texture::getInstance()->getTexture(listEffect[12]), SDL_BLENDMODE_ADD);
 
     Texture::getInstance()->load(listEffect[13], 6, 5), frames[13] = 28, scales[13] = 2, rates[13] = 15, times[13] = 90;
     SDL_SetTextureBlendMode(Texture::getInstance()->getTexture(listEffect[13]), SDL_BLENDMODE_ADD);
     //SDL_SetTextureColorMod(Texture::getInstance()->getTexture(listEffect[13]), 200, 0, 200);
+    Texture::getInstance()->load(listEffect[14], 1, 8), frames[14] = 8, scales[14] = 1, rates[14] = 15, times[14] = 20;
 
 
 }
@@ -89,5 +90,18 @@ void Effect::renderDeaths(SDL_Rect camera) {
 void Effect::shake(SDL_Rect& camera, int delta) {
     camera.w = randUint(delta) - delta;
     camera.h = randUint(delta) - delta;
+}
+
+void Effect::redScreen() {
+    static int timer = 0;
+    SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 200, 0, 0, 200);
+    if (++timer <= 10) {
+        SDL_RenderFillRect(Texture::getInstance()->getRenderer(), NULL);
+    }
+    if (timer == 20) timer = 0;
+}
+
+void Effect::release() {
+
 }
 

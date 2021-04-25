@@ -6,13 +6,13 @@
 Enemy::Enemy() {
     rate = 30;
 
-    moveSpeed = randInt(1, 2);
+    moveSpeed = randInt(1, 3);
 
     hp = 100;
 
     while (true) {
         x = randUint(4000);
-        y = randUint(3000);
+        y = randUint(7000);
         if (Map::getInstance()->getTypeOfTile(x, y + 40) == 1) break;
     }
 
@@ -68,6 +68,7 @@ void Enemy::update(SDL_Rect& camera, Player* player) {
     dx = dy = 0;
 
     weapon->update(x, y, player->getX(), player->getY(), getAngle(x, y, player->getX(), player->getY()), getDistance(x, y, player->getX(), player->getY()) <= 300, flip);
+    //weapon->update(x, y, player->getX(), player->getY(), getAngle(x, y, player->getX(), player->getY()), false, flip);
 
 }
 
@@ -80,6 +81,7 @@ void Enemy::render(SDL_Rect camera) {
     }
 
     Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8f);
+    //Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 2.0f);
     weapon->render(camera);
 }
 

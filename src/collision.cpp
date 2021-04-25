@@ -8,7 +8,7 @@ void checkCollision(Player* player, vector<Enemy*>& enemies) {
                 auto v = enemies[j];
                 if (v->getHP() >= 0) {
                     if (getDistance(it->x, it->y, v->getX(), v->getY()) <= 50) {
-                        Effect::getInstance()->add(0, v->getX(), v->getY());
+                        //Effect::getInstance()->add(0, v->getX(), v->getY());
                         Effect::getInstance()->add(2, it->x, it->y);
                         v->addHP(-20);
                         it->time = 0;
@@ -30,6 +30,7 @@ void checkCollision(Player* player, vector<Enemy*>& enemies) {
                     player->addHP(-5);
                     it->time = 0;
                     Effect::getInstance()->add(it->effectID, it->x, it->y);
+                    //Effect::getInstance()->redScreen();
                     break;
                 }
             }

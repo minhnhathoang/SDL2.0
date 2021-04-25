@@ -30,9 +30,11 @@ void Texture::load(string ID, int row, int col) {
 
     textureMap[ID] = u;
 
+    // cout << textureMap.size() << endl;
+
 }
 
-void Texture::render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip, float scale) {
+void Texture::render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip, float scale, SDL_Point* point) {
 
     SDL_Rect src, dst;
 
@@ -50,7 +52,7 @@ void Texture::render(string ID, int x, int y, int currentFrames, float angle, SD
     dst.x = x - dst.w / 2;
     dst.y = y - dst.h / 2;
 
-    SDL_RenderCopyEx(renderer, temp.texture, &src, &dst, angle, NULL, flip);
+    SDL_RenderCopyEx(renderer, temp.texture, &src, &dst, angle, point, flip);
 }
 
 void Texture::render(string ID, SDL_Rect src, SDL_Rect dst) {
@@ -87,3 +89,21 @@ SDL_Texture* Texture::getTexture(string ID) {
     return textureMap[ID].texture;
 }
 
+void Texture::destroy(string ID) {
+    map<string, textureData>::iterator it = textureMap.find(ID);
+
+    if (it == textureMap.end()) {
+        cout << ID << " has not been loaded !\n";
+    } else {
+        SDL_DestroyTexture(it->second.texture);
+        textureMap.erase(it);
+    }
+}
+
+void Texture::release() {
+    for (auto it = textureMap.begin(); it != textureMap.end(); ++it) {
+        SDL_DestroyTexture(it->second.texture);
+        it->second.texture = nullptr;
+    }
+    textureMap.clear();
+}

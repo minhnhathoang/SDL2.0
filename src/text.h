@@ -22,6 +22,8 @@ public:
 
     void render(string mes, int x, int y, bool neg = 0, double scale = 1);
 
+    void release();
+
 private:
 
     TTF_Font* font;

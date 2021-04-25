@@ -14,6 +14,11 @@ const int MAX_KEY = 400;
 const double PI = acos(-1);
 
 enum {
+    VICTORY,
+    DEFEAT
+};
+
+enum {
     PLAY,
     CONTINUE,
     RESTART,
@@ -77,15 +82,8 @@ static const char* listDeath[] = { "assets/images/die/die_blue.png",
                                    "assets/images/die/die_boss.png",
                                  };
 
-enum {
-    RIFLE,
-    M4A1,
-    PISTOL,
-
-    MAX_GUN = 100
-};
-
 static const char* listGun[] {
+    "assets/images/gun/0.png",
     "assets/images/gun/1.png",
     "assets/images/gun/2.png",
     "assets/images/gun/3.png",

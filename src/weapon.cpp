@@ -8,7 +8,7 @@
 Weapon::Weapon() {
     guns.clear();
     bullets.clear();
-    guns.resize(MAX_GUN);
+    guns.resize(10);
     shooting = false;
     //currentGun = 0;
 }
@@ -48,7 +48,7 @@ void Weapon::initGun(int ID) {
             temp.reserveAmmo = 35;
             temp.maxAmmo = 35;
             temp.soundID = 6;
-            temp.effectID = 13;
+            temp.effectID = 12;
             guns[ID] = temp;
             Texture::getInstance()->load(string(listAmmo[ID]), 1, 1);
             Texture::getInstance()->load(string(listGun[ID]), 1, 5);
@@ -155,48 +155,14 @@ void Weapon::initGun(int ID) {
             Texture::getInstance()->load(string(listAmmo[ID]), 1, 1);
             Texture::getInstance()->load(string(listGun[ID]), 1, 6);
             break;
-         case 8:
-            temp.ID = ID;
-            temp.projectileID = ID;
-            temp.reloadTime.first = temp.reloadTime.second = 10;
-            temp.delayTime.first = temp.delayTime.second = 10;
-            temp.velocity = 30;
-            temp.frameRate = 60;
-            temp.scaleFrame = 0.5;
-            temp.nFrames = 9;
-            temp.magazineAmmo = 35;
-            temp.reserveAmmo = 35;
-            temp.maxAmmo = 35;
-            temp.soundID = 0;
-            guns[ID] = temp;
-            Texture::getInstance()->load(string(listAmmo[ID]), 1, 1);
-            Texture::getInstance()->load(string(listGun[ID]), 1, 9);
-            break;
-         case 9:
-            temp.ID = ID;
-            temp.projectileID = ID;
-            temp.reloadTime.first = temp.reloadTime.second = 10;
-            temp.delayTime.first = temp.delayTime.second = 10;
-            temp.velocity = 30;
-            temp.frameRate = 60;
-            temp.scaleFrame = 0.7;
-            temp.nFrames = 14;
-            temp.magazineAmmo = 35;
-            temp.reserveAmmo = 35;
-            temp.maxAmmo = 35;
-            temp.soundID = 0;
-            guns[ID] = temp;
-            Texture::getInstance()->load(string(listAmmo[ID]), 1, 1);
-            Texture::getInstance()->load(string(listGun[ID]), 1, 14);
-            break;
-        case 10:
+        case 8:
             temp.ID = ID;
             temp.projectileID = ID;
             temp.reloadTime.first = temp.reloadTime.second = 10;
             temp.delayTime.first = temp.delayTime.second = 10;
             temp.velocity = 10;
             temp.frameRate = 60;
-            temp.scaleFrame = 0.4;
+            temp.scaleFrame = 0.35;
             temp.nFrames = 7;
             temp.magazineAmmo = 35;
             temp.reserveAmmo = 35;
@@ -231,8 +197,8 @@ void Weapon::update(int _x, int _y, int x_dst, int y_dst, float _angle, bool _sh
         if (it->time == 0) {
             bullets.erase(it);
         } else {
-            it->x += guns[currentGun].velocity * it->dx;
-            it->y += guns[currentGun].velocity * it->dy;
+            it->x += it->velocity * it->dx;
+            it->y += it->velocity * it->dy;
             ++it;
         }
     }
@@ -253,6 +219,7 @@ void Weapon::update(int _x, int _y, int x_dst, int y_dst, float _angle, bool _sh
                 bullet.dy = sin(angle * PI / 180);
                 bullet.x = x + 100 * bullet.dx;
                 bullet.y = y + 100 * bullet.dy;
+                bullet.velocity = guns[currentGun].velocity;
                 bullet.angle = angle;
                 bullet.time = 1;
                 bullet.projectileID = currentGun;
@@ -272,6 +239,10 @@ void Weapon::update(int _x, int _y, int x_dst, int y_dst, float _angle, bool _sh
     }
 }
 
+bool Weapon::isShooting() {
+    return shooting;
+}
+
 void Weapon::reload() {
     Sound::getInstance()->playChunks(3, 1);
 
@@ -280,6 +251,11 @@ void Weapon::reload() {
                   min(guns[currentGun].maxAmmo - guns[currentGun].magazineAmmo, guns[currentGun].reserveAmmo) });
     guns[currentGun].reserveAmmo -= u;
     guns[currentGun].magazineAmmo += u;
+}
+
+void Weapon::laserSight(int x1, int y1, int x2, int y2) {
+    SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 200, 0, 0, 255);
+    SDL_RenderDrawLine(Texture::getInstance()->getRenderer(), x1, y1, x2, y2);
 }
 
 pair<int, int> Weapon::getAmmunition() {
@@ -297,4 +273,5 @@ void Weapon::render(SDL_Rect& camera) {
     }
 
     Texture::getInstance()->render(string(listGun[currentGun]), x - camera.x, y - camera.y, currentFrame, angle, flip, guns[currentGun].scaleFrame * 0.8f);
+    //Texture::getInstance()->render(string(listGun[currentGun]), x - camera.x, y - camera.y, currentFrame, angle, flip, guns[currentGun].scaleFrame * 2.0f);
 }

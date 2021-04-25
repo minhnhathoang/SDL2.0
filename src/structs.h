@@ -37,6 +37,7 @@ struct Bullet {
     double dx, dy;
     double angle;
     int time;
+    double velocity;
     int projectileID;
     int soundID;
     int effectID;

@@ -41,3 +41,7 @@ void Sound::playChunks(int id, int channel) {
         Mix_PlayChannel(channel, chunks[id], 0);
     }
 }
+
+void Sound::release() {
+
+}

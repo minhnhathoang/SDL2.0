@@ -28,6 +28,8 @@ Game::Game() {
 
     cout << "SDL initialized successfully !" << '\n';
 
+    SDL_ShowCursor(true);
+
     Texture::getInstance()->setRenderer(renderer);
     Text::getInstance()->setRenderer(renderer);
 
@@ -38,14 +40,19 @@ void Game::init() {
 
     isRunning = true;
     isRestarting = false;
-
-    SDL_ShowCursor(true);
+    status = -1;
 
     camera = { 0, 0, 0, 0 };
 
-    player = new Player();
+    if (player == nullptr) {
+        player = new Player();
+    }
 
-    for (int i = 0; i < 10; ++i) {
+    player->init();
+
+    enemies.clear();
+
+    for (int i = 0; i < 100; ++i) {
         enemies.emplace_back(new Enemy());
     }
 
@@ -53,9 +60,6 @@ void Game::init() {
 
 
     Texture::getInstance()->load("assets/images/hud.png", 1, 1);
-
-    item = new Item();
-    //Sound::getInstance()->playMusic();
 }
 
 void Game::menu(int type) {
@@ -85,7 +89,9 @@ void Game::menu(int type) {
                                 break;
                             case SDL_SCANCODE_RETURN:
                                 flag = true;
-                                if (curSelection == QUIT) this->quit();
+                                if (curSelection == QUIT) {
+                                    this->quit();
+                                }
                                 break;
                             default:
                                 break;
@@ -120,17 +126,18 @@ void Game::menu(int type) {
                     case SDL_KEYDOWN:
                         switch (event.key.keysym.scancode) {
                             case SDL_SCANCODE_UP:
-                                curSelection = (curSelection + 2) % 3;
+                                curSelection = (curSelection - 1 + 2) % 3 + 1;
                                 break;
                             case SDL_SCANCODE_DOWN:
-                                curSelection = (curSelection + 1) % 3;
+                                curSelection = (curSelection - 1 + 1) % 3 + 1;
                                 break;
                             case SDL_SCANCODE_RETURN:
+                                flag = true;
                                 if (curSelection == CONTINUE) {
 
                                 } else if (curSelection == RESTART) {
                                     isRestarting = true;
-                                    this->quit();
+                                    isRunning = false;
                                 } else if (curSelection == QUIT) {
                                     this->quit();
                                 }
@@ -196,7 +203,6 @@ void Game::handle() {
 
 void Game::update() {
 
-
     if (keyboard[SDL_SCANCODE_SPACE] == 0) {
         updateCamera();
     }
@@ -211,7 +217,7 @@ void Game::update() {
 
     for (auto it = enemies.begin(); it != enemies.end(); ) {
         if ((*it)->getHP() <= 0) {
-            Effect::getInstance()->addDeath((*it)->getID(), (*it)->getX(), (*it)->getY(), 5000, 0);
+            Effect::getInstance()->addDeath((*it)->getID(), (*it)->getX(), (*it)->getY(), 1000, 0);
             enemies.erase(it);
         } else {
             (*it)->update(camera, player);
@@ -223,6 +229,10 @@ void Game::update() {
         }
     }
 
+    if (player->getHP() <= 0 || player->getOxy() <= 0) {
+        status = VICTORY;
+    }
+
 }
 
 void Game::render() {
@@ -231,61 +241,127 @@ void Game::render() {
     SDL_RenderClear(renderer);
 
     Map::getInstance()->render(camera);
-
     Effect::getInstance()->renderDeaths(camera);
-
-    SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
-
-    int uu, vv;
-    SDL_GetMouseState(&uu, &vv);
-    SDL_RenderDrawLine(Texture::getInstance()->getRenderer(), player->getX() - camera.x, player->getY() - camera.y - 10, uu, vv);
-
-    //item->render(camera);
-
     for (auto it = enemies.begin(); it != enemies.end(); ++it) {
         (*it)->render(camera);
     }
-
     player->render(camera);
+    //Effect::getInstance()->render(camera);
 
-    Effect::getInstance()->render(camera);
+    SDL_Texture* shadow = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_SetTextureBlendMode(shadow, SDL_BLENDMODE_MOD);
+
+    Texture::getInstance()->load("assets/images/light/b.png", 1, 1);
+    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture("assets/images/light/b.png"), SDL_BLENDMODE_ADD);
+
+    SDL_SetRenderTarget(renderer, shadow);
+
+    SDL_SetRenderDrawColor(renderer, 40, 40, 40, 0);
+    SDL_RenderFillRect(renderer, nullptr);
 
 
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MUL);
+    SDL_RenderClear(renderer);
+    //Texture::getInstance()->render("assets/images/light/b.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1, getAngle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mouse.x, mouse.y), SDL_FLIP_NONE, 4);
+    SDL_SetRenderTarget(renderer, 0);
+    SDL_RenderCopy(renderer, shadow, NULL, NULL);
 
-    static int u = 200, v = 0;
-//    ++v;
-//    //SDL_SetRenderDrawColor(renderer, listColor[player->idCrew].r, listColor[player->idCrew].g, listColor[player->idCrew].b, u);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
-//    if (v % 10 == 0)
-//    u = u == 100 ? 0 : 100;
-//
-//  Effect::getInstance()->shake(camera, 20);
-//
-    SDL_RenderFillRect(renderer, NULL);
-
-//    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MUL);
-//    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
-//    SDL_Rect dst  = {500, 500, 200, 200};
-//    SDL_RenderFillRect(renderer, &dst);
+    SDL_DestroyTexture(shadow);
 
     renderHUD();
+
+    endgame();
 
     SDL_RenderPresent(renderer);
 }
 
+//void Game::render() {
+//    if (isRestarting) return;
+//
+//    SDL_RenderClear(renderer);
+//
+//    Map::getInstance()->render(camera);
+//
+//    Effect::getInstance()->renderDeaths(camera);
+//
+//
+//    for (auto it = enemies.begin(); it != enemies.end(); ++it) {
+//        (*it)->render(camera);
+//    }
+//
+//    player->render(camera);
+//
+//    Effect::getInstance()->render(camera);
+//
+//    SDL_Texture* shadow = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
+//    SDL_SetTextureBlendMode(shadow, SDL_BLENDMODE_MOD);
+//
+//    Texture::getInstance()->load("assets/images/light/3.png", 1, 1);
+//    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture("assets/images/light/3.png"), SDL_BLENDMODE_ADD);
+//
+//    SDL_SetRenderTarget(renderer, shadow);
+////    static int u = 0, v = 0;
+////    if (++v % 5 == 0) {
+////        ++u;
+////    }
+//    SDL_SetRenderDrawColor(renderer, 200, 30, 30, 0);  /* put your desired tint , (the alpha value has no effect here) */
+//    SDL_RenderFillRect(renderer, nullptr); /* draw the color to the entire shadow*/
+//
+//
+//    Texture::getInstance()->render("assets/images/light/3.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1, getAngle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mouse.x, mouse.y), SDL_FLIP_NONE, 0.6);
+//    SDL_SetRenderTarget(renderer, 0) /* set the render back to your scene*/;
+//    SDL_RenderCopy(renderer, shadow, NULL, NULL); /* shadow */
+//
+//    SDL_DestroyTexture(shadow);
+//
+//
+//
+//
+////    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MOD);
+//
+//
+//
+////    static int u = 100, v = 0;
+////    ++v;
+////    SDL_SetRenderDrawColor(renderer, listColor[player->idCrew].r, listColor[player->idCrew].g, listColor[player->idCrew].b, u);
+////    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 2550);
+////    if (v % 10 == 0)
+////    u = u == 100 ? 0 : 100;
+////
+////    SDL_RenderFillRect(renderer, nullptr);
+//
+////    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_MUL);
+////    SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
+////    SDL_Rect dst  = {500, 500, 200, 200};
+////    SDL_RenderFillRect(renderer, &dst);
+//
+//
+////    Texture::getInstance()->load("assets/images/light/3.png", 1, 1);
+////    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture("assets/images/light/3.png"), SDL_BLENDMODE_ADD);
+////    Texture::getInstance()->render("assets/images/light/3.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1, getAngle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mouse.x, mouse.y), SDL_FLIP_NONE, 0.5);
+////
+//////    Texture::getInstance()->load("assets/images/light/4.png", 1, 1);
+//////    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture("assets/images/light/4.png"), SDL_BLENDMODE_MUL);
+//////    Texture::getInstance()->render("assets/images/light/4.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1, getAngle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, mouse.x, mouse.y));
+//    //endgame();
+//    //renderHUD();
+////
+//    SDL_RenderPresent(renderer);
+//}
+
 void Game::renderHUD() {
     // bar 321x19
-    // health // (45,699);
-    // oxy bar (45,731)
+    // health // (45, 699);
+    // oxy bar (45, 731)
 
     Texture::getInstance()->render("assets/images/hud.png");
 
-    SDL_SetRenderDrawColor(renderer, 235, 81, 69, 0);
+    SDL_SetRenderDrawBlendMode(Texture::getInstance()->getRenderer(), SDL_BLENDMODE_NONE);
+
+    SDL_SetRenderDrawColor(renderer, 235, 0, 0, 255);
     SDL_Rect dst = { 45, 699, player->getHP() * 321 / 100, 19 };
     SDL_RenderFillRect(renderer, &dst);
 
-    SDL_SetRenderDrawColor(renderer, 53, 158, 187, 0);
+    SDL_SetRenderDrawColor(renderer, 53, 158, 187, 255);
     dst = { 45, 731, player->getOxy() * 321 / 100, 19 };
     SDL_RenderFillRect(renderer, &dst);
 
@@ -297,12 +373,34 @@ void Game::renderHUD() {
 
     Text::getInstance()->render("$" + to_string(player->getCoin()), 10, 500);
 
+    if (true) {
+        SDL_SetRenderDrawColor(renderer, 0, 200, 0, 250);
+        dst = { 45 + 500, 731, 100 * 321 / 100, 19 };
+        SDL_RenderFillRect(renderer, &dst);
+    }
+}
 
+void Game::endgame() {
+    if (status == -1) {
 
+        return;
+    }
 
-    //Text::getInstance()->render("Shooting MEOW", 500, 500);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
+    SDL_RenderFillRect(renderer, nullptr);
 
-    SDL_SetRenderDrawColor(renderer, 200, 0, 0, 250);
+    status = VICTORY;
+
+    if (status == VICTORY) {
+        Texture::getInstance()->load("assets/images/victory.png", 1, 1);
+        Texture::getInstance()->render("assets/images/victory.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    } else if (status == DEFEAT) {
+        Texture::getInstance()->load("assets/images/defeat.png", 1, 1);
+        Texture::getInstance()->render("assets/images/defeat.png", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    }
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 }
 
 void Game::updateCamera() {
@@ -324,9 +422,22 @@ bool Game::restarting() {
 
 void Game::quit() {
     isRunning = false;
+    isRestarting = false;
 }
 
 void Game::clean() {
+     Texture::getInstance()->release();
+    Sound::getInstance()->release();
+    Text::getInstance()->release();
+    Map::getInstance()->release();
+    Effect::getInstance()->release();
+
+    delete player;
+
+    while (enemies.size() > 0) {
+        enemies.pop_back();
+    }
+
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();

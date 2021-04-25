@@ -38,7 +38,11 @@ public:
     void update(int _x, int _y, int x_dst, int y_dst, float angle, bool _shooting, SDL_RendererFlip _flip);
     void render(SDL_Rect& camera);
 
+    bool isShooting();
+
     void reload();
+
+    void laserSight(int x1, int y1, int x2, int y2);
 
     pair<int, int> getAmmunition();
 

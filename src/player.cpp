@@ -4,40 +4,43 @@
 #include "game.h"
 
 Player::Player() {
+    weapon = new Weapon();
+}
 
-    hp = 100;
-    oxy = 100;
-    coin = 300;
+void Player::init() {
+
+    idCrew = idCrew = randUint(MAX_CREW - 1);
+    Texture::getInstance()->load(string(listCrew[idCrew]), 1, nFrames = 25);
 
     rate = 35;
 
-    moveSpeed = 4;
-    x = 2570 * 50 / 40 + 10;
-    y = 752 * 50 / 40 + 10;
-    nFrames = 25;
+    x = 5572, y = 4600;
+    //x = 2000, y = 2000;
+    dx = dy = 0;
+    moveSpeed = 3;
 
-    idCrew = randUint(MAX_CREW - 1);
-
-    Texture::getInstance()->load(string(listCrew[idCrew]), 1, 25);
+    hp = 100;
+    oxy = 100;
+    energySpotlight = 100;
+    coin = 300;
 
     flip = SDL_FLIP_NONE;
-
-    dx = dy = 0;
-
     isMove = 0;
 
     idGun = 0;
-    weapon = new Weapon();
+    weapon->initGun(idGun);
 
-    weapon->initGun(10);
 }
 
 
 void Player::update(SDL_Rect& camera, bool keyboard[], Mouse mouse) {
 
+    if (oxy <= 0 || hp <= 0) {
+        return;
+    }
 
     if (keyboard[SDL_SCANCODE_E]) {
-        weapon->initGun(randUint(9));
+        weapon->initGun(randUint(8));
     }
     if (keyboard[SDL_SCANCODE_R]) {
         weapon->reload();
@@ -77,21 +80,36 @@ void Player::update(SDL_Rect& camera, bool keyboard[], Mouse mouse) {
         y -= dy;
     }
 
-    oxy--;
 
     isMove = keyboard[SDL_SCANCODE_W] | keyboard[SDL_SCANCODE_A] | keyboard[SDL_SCANCODE_S] | keyboard[SDL_SCANCODE_D];
 
 
     weapon->update(x, y, mouse.x, mouse.y, getAngle(x - camera.x, y - camera.y, mouse.x, mouse.y), mouse.L, flip);
 
+    if (weapon->isShooting() == true) {
+        //Effect::getInstance()->shake(camera, 10);
+    }
+
 }
 
 void Player::render(SDL_Rect& camera) {
+
+    if (oxy <= 0 || hp <= 0) {
+        Effect::getInstance()->addDeath(idCrew, x, y, 1000, 0);
+        return;
+    }
 
     int currentFrame = nFrames;
 
     if (isMove) {
         currentFrame = (SDL_GetTicks() * rate / 1000) % (nFrames - 1) + 1;
+    }
+
+
+    if (idGun == 0) {
+        int m1, m2;
+        SDL_GetMouseState(&m1, &m2);
+        weapon->laserSight(x - camera.x, y - camera.y - 10, m1, m2);
     }
 
     Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8f);

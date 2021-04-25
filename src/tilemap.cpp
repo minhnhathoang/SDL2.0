@@ -6,9 +6,6 @@ const int dr[] = { 0, -1, 0, 1 , 1, 1, -1, -1 };
 const int dc[] = { 1, 0, -1, 0 , 1, -1, 1, -1 };
 
 Map::Map() {
-    //tMap = new Texture(renderer, "assets/images/map.png");
-    //tMap = new Texture("assets/images/modmap.png");
-    //tMap = new Texture(renderer, "assets/images/map1.png");
 
     mapID = "assets/images/modmap.png";
     //mapID = "assets/images/map.png";
@@ -67,11 +64,14 @@ void Map::addEdge(int u, int v) {
 void Map::render(SDL_Rect camera) {
     for (int i = 0; i < nWidth; ++i) {
         for (int j = 0; j < nHeight; ++j) {
-            //if (tiles[i][j].type != 1) continue;
+
             SDL_Rect src = { tiles[i][j].x, tiles[i][j].y, tiles[i][j].w, tiles[i][j].h };
             SDL_Rect dst = { i * 25 - camera.x, j * 25 - camera.y, 25, 25 };
 
-            Texture::getInstance()->render(mapID, src, dst);
+            if (dst.x >= -30 && dst.x <= SCREEN_WIDTH + 30 && dst.y >= -30 && dst.y <= SCREEN_HEIGHT + 30) {
+                Texture::getInstance()->render(mapID, src, dst);
+            }
+
         }
     }
 }
@@ -92,4 +92,8 @@ int Map::getTile(int x, int y) {
         return 0;
     }
     return tiles[u][v].id;
+}
+
+void Map::release() {
+
 }

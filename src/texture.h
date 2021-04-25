@@ -31,7 +31,7 @@ public:
 
     void load(string ID, int row, int col);
 
-    void render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip = SDL_FLIP_NONE, float scale = 1.0f);
+    void render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip = SDL_FLIP_NONE, float scale = 1.0f, SDL_Point* point = nullptr);
 
     void render(string ID, SDL_Rect src, SDL_Rect dst);
 
@@ -39,7 +39,11 @@ public:
 
     void render(string ID);
 
+    void destroy(string ID);
+
     SDL_Renderer* getRenderer();
+
+    void release();
 
 private:
 
