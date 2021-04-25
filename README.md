@@ -14,7 +14,7 @@ Nhân vật lấy ý tưởng từ game Among Us với bối cảnh là bản đ
 
 Các vũ khí, một số hiệu ứng lấy từ game [Plazma Burst](https://plazmaburst.miraheze.org/wiki/Weapons)
 
-# How to play
+## How to play
 
-Sử dụng các phím WASD để di chuyển và chuột phải để bắn
+Sử dụng các phím WASD để di chuyển và chuột trái để bắn
 
