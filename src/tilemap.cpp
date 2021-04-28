@@ -87,7 +87,7 @@ int Map::getTypeOfTile(int x, int y) {
 
 int Map::getTile(int x, int y) {
     int u = x / 25;
-    int v = y / 25  ;
+    int v = y / 25;
     if (u < 0 || v < 0 || u >= nWidth || v >= nHeight) {
         return 0;
     }

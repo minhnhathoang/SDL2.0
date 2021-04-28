@@ -11,7 +11,7 @@ class Item {
 public:
     Item();
 
-    void update(Player* player, bool keyboard[]);
+    void update(bool keyboard[]);
     void render(SDL_Rect camera);
 
     void randomPosition(int &x, int &y);

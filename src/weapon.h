@@ -33,7 +33,7 @@ class Weapon {
 public:
     Weapon();
 
-    void initGun(int ID);
+    void initGun(int ID, float _scale);
 
     void update(int _x, int _y, int x_dst, int y_dst, float angle, bool _shooting, SDL_RendererFlip _flip);
     void render(SDL_Rect& camera);
@@ -58,7 +58,9 @@ public:
     vector<Gun> guns;
     vector<Bullet> bullets;
 
+
 private:
+    float scale;
 
 };
 

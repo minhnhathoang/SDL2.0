@@ -9,11 +9,12 @@ Enemy::Enemy() {
     moveSpeed = randInt(1, 3);
 
     hp = 100;
+    scale = randF(1, 2);
 
     while (true) {
         x = randUint(4000);
         y = randUint(7000);
-        if (Map::getInstance()->getTypeOfTile(x, y + 40) == 1) break;
+        if (Map::getInstance()->getTypeOfTile(x, y + scale * 40) == 1) break;
     }
 
     nFrames = 25;
@@ -29,9 +30,10 @@ Enemy::Enemy() {
 
     isMove = 0;
 
+
     weapon = new Weapon();
     idGun = randUint(7);
-    weapon->initGun(idGun);
+    weapon->initGun(idGun, scale);
 }
 
 Enemy::~Enemy() {
@@ -42,14 +44,14 @@ void Enemy::update(SDL_Rect& camera, Player* player) {
 
     x += dx;
 
-    if (Map::getInstance()->getTypeOfTile(x, y + 40) != 1) {
+    if (Map::getInstance()->getTypeOfTile(x, y + scale * 40) != 1) {
         x -= dx;
         dx = 0;
     }
 
     y += dy;
 
-    if (Map::getInstance()->getTypeOfTile(x, y + 40) != 1) {
+    if (Map::getInstance()->getTypeOfTile(x, y + scale * 40) != 1) {
         y -= dy;
         dy = 0;
     }
@@ -68,8 +70,6 @@ void Enemy::update(SDL_Rect& camera, Player* player) {
     dx = dy = 0;
 
     weapon->update(x, y, player->getX(), player->getY(), getAngle(x, y, player->getX(), player->getY()), getDistance(x, y, player->getX(), player->getY()) <= 300, flip);
-    //weapon->update(x, y, player->getX(), player->getY(), getAngle(x, y, player->getX(), player->getY()), false, flip);
-
 }
 
 void Enemy::render(SDL_Rect camera) {
@@ -80,14 +80,12 @@ void Enemy::render(SDL_Rect camera) {
         currentFrame = (SDL_GetTicks() * rate / 1000) % (nFrames - 1) + 1;
     }
 
-    Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8f);
-    //Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 2.0f);
+    Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8 * scale);
     weapon->render(camera);
 }
 
 void Enemy::findPath(int dst) {
-
-    int src = Map::getInstance()->getTile(x, y + 40);
+    int src = Map::getInstance()->getTile(x, y + scale * 40);
 
     if (dst == src) return;
 

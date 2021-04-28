@@ -1,5 +1,6 @@
 #include "effect.h"
 #include "header.h"
+#include "player.h"
 
 Effect::Effect() {
     deaths.clear();
@@ -35,6 +36,12 @@ Effect::Effect() {
     //SDL_SetTextureColorMod(Texture::getInstance()->getTexture(listEffect[13]), 200, 0, 200);
     Texture::getInstance()->load(listEffect[14], 1, 8), frames[14] = 8, scales[14] = 1, rates[14] = 15, times[14] = 20;
 
+
+    Texture::getInstance()->load(lights[LIGHT], 1, 1);
+    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture(lights[LIGHT]), SDL_BLENDMODE_ADD);
+    Texture::getInstance()->load(lights[FLASHLIGHT], 1, 1);
+    SDL_SetTextureBlendMode(Texture::getInstance()->getTexture(lights[FLASHLIGHT]), SDL_BLENDMODE_ADD);
+    //SDL_SetTextureColorMod(Texture::getInstance()->getTexture(lights[FLASHLIGHT]), 255, 150, 0);
 
 }
 
@@ -92,13 +99,38 @@ void Effect::shake(SDL_Rect& camera, int delta) {
     camera.h = randUint(delta) - delta;
 }
 
-void Effect::redScreen() {
+void Effect::redScreen(int type) {
     static int timer = 0;
-    SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 200, 0, 0, 200);
-    if (++timer <= 10) {
+
+    if (type == -1) {
+        timer = 0;
+    } else if (type == 1) {
+        timer += 5;
+    } else {
+        if (timer == 0) return;
+        SDL_SetRenderDrawBlendMode(Texture::getInstance()->getRenderer(), SDL_BLENDMODE_BLEND);
+        SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 255, 0, 0, 50);
         SDL_RenderFillRect(Texture::getInstance()->getRenderer(), NULL);
+        SDL_SetRenderDrawBlendMode(Texture::getInstance()->getRenderer(), SDL_BLENDMODE_NONE);
+        --timer;
     }
-    if (timer == 20) timer = 0;
+}
+
+void Effect::light(int type, float angle, SDL_Rect camera) {
+    if (type < 0) return;
+
+    SDL_Texture* shadow = SDL_CreateTexture(Texture::getInstance()->getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
+    SDL_SetTextureBlendMode(shadow, SDL_BLENDMODE_MOD);
+
+    SDL_SetRenderTarget(Texture::getInstance()->getRenderer(), shadow);
+
+    SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 30, 30, 30, 255);
+    SDL_RenderFillRect(Texture::getInstance()->getRenderer(), nullptr);
+    Texture::getInstance()->render(lights[type], Player::getInstance()->getX() - camera.x, Player::getInstance()->getY() - camera.y, 1, angle, SDL_FLIP_NONE, 3);
+
+    SDL_SetRenderTarget(Texture::getInstance()->getRenderer(), nullptr);
+    SDL_RenderCopy(Texture::getInstance()->getRenderer(), shadow, NULL, NULL);
+    SDL_DestroyTexture(shadow);
 }
 
 void Effect::release() {

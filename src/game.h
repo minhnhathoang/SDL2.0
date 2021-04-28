@@ -3,8 +3,6 @@
 
 #include "header.h"
 
-#include "tilemap.h"
-#include "player.h"
 #include "enemy.h"
 #include "text.h"
 #include "sound.h"
@@ -47,25 +45,23 @@ public:
 
     SDL_Renderer* getRenderer();
 
-    Player* player = nullptr;
 private:
-
-    vector<Enemy*> enemies;
-
-
-    SDL_Rect camera;
-
-
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-
     Mouse mouse;
     bool keyboard[MAX_KEY];
 
+    vector<Enemy*> enemies;
+
+    Item* item;
+
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    SDL_Rect camera;
+
+
     bool isRestarting = 0;
     bool isRunning;
-
     int status;
+    int currentLight;
 
 };
 

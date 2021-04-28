@@ -19,6 +19,16 @@ enum {
 };
 
 enum {
+    LIGHT,
+    FLASHLIGHT,
+};
+
+static const char* lights[] = {
+    "assets/images/light.png",
+    "assets/images/flashlight.png",
+};
+
+enum {
     PLAY,
     CONTINUE,
     RESTART,

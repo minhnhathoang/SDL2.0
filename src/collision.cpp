@@ -30,7 +30,7 @@ void checkCollision(Player* player, vector<Enemy*>& enemies) {
                     player->addHP(-5);
                     it->time = 0;
                     Effect::getInstance()->add(it->effectID, it->x, it->y);
-                    //Effect::getInstance()->redScreen();
+                    Effect::getInstance()->redScreen(0);
                     break;
                 }
             }

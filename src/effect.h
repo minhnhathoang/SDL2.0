@@ -46,7 +46,9 @@ public:
     void renderDeaths(SDL_Rect camera);
 
     void shake(SDL_Rect& camera, int delta);
-    void redScreen();
+    void redScreen(int type);
+
+    void light(int type, float angle, SDL_Rect camera);
 
     void update();
 

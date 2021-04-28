@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
             if (1000 / FPS > frameTime) {
                 SDL_Delay(1000 / FPS - frameTime);
             }
-            //cout << frameTime << endl;
+            cout << frameTime << endl;
         }
 
         if (Game::getInstance()->restarting() == false) {

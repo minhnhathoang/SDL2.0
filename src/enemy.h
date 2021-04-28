@@ -19,7 +19,6 @@ public:
 
     void findPath(int dst);
 
-
     int getID();
 
     int getX();
@@ -27,8 +26,8 @@ public:
     int getHP();
     void addHP(int delta);
 
-
     Weapon* weapon;
+
 private:
     int idCrew;
     int idGun;
@@ -46,6 +45,8 @@ private:
     bool isMove = 0;
 
     SDL_RendererFlip flip;
+
+    float scale;
 
 };
 

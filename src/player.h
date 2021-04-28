@@ -10,6 +10,15 @@
 class Player {
 
 public:
+
+    static Player* getInstance() {
+        static Player* instance;
+        if (instance == nullptr) {
+            instance = new Player();
+        }
+        return instance;
+    }
+
     Player();
 
 
@@ -19,9 +28,11 @@ public:
 
     int getX();
     int getY();
+    float getScale();
     int getHP();
     int getOxy();
     int getCoin();
+    int getELight();
     void addHP(int delta);
 
     string getID();
@@ -32,6 +43,7 @@ public:
 
     Weapon* weapon;
     int idCrew;
+    int energyLight;
 private:
     int idGun;
 
@@ -42,13 +54,15 @@ private:
     int moveSpeed;
 
     int hp, oxy, coin;
-    int energySpotlight;
 
     int rate;
 
     bool isMove = 0;
 
     SDL_RendererFlip flip;
+
+
+    float scale = 1;
 };
 
 #endif // __player__h

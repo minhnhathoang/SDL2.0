@@ -17,18 +17,21 @@ void Player::init() {
     x = 5572, y = 4600;
     //x = 2000, y = 2000;
     dx = dy = 0;
-    moveSpeed = 3;
+    moveSpeed = 4;
 
     hp = 100;
     oxy = 100;
-    energySpotlight = 100;
+    energyLight = 10000;
     coin = 300;
 
     flip = SDL_FLIP_NONE;
     isMove = 0;
 
     idGun = 0;
-    weapon->initGun(idGun);
+
+//    scale = randF(1.0, 2.0);
+    scale = 1;
+    weapon->initGun(idGun, scale);
 
 }
 
@@ -40,7 +43,7 @@ void Player::update(SDL_Rect& camera, bool keyboard[], Mouse mouse) {
     }
 
     if (keyboard[SDL_SCANCODE_E]) {
-        weapon->initGun(randUint(8));
+        weapon->initGun(randUint(8), scale);
     }
     if (keyboard[SDL_SCANCODE_R]) {
         weapon->reload();
@@ -70,13 +73,13 @@ void Player::update(SDL_Rect& camera, bool keyboard[], Mouse mouse) {
 
     x += dx;
 
-    if (Map::getInstance()->getTypeOfTile(x, y + 40) != 1) {
+    if (Map::getInstance()->getTypeOfTile(x, y + 40 * scale) != 1) {
         x -= dx;
     }
 
     y += dy;
 
-    if (Map::getInstance()->getTypeOfTile(x, y + 40) != 1) {
+    if (Map::getInstance()->getTypeOfTile(x, y + 40 * scale) != 1) {
         y -= dy;
     }
 
@@ -87,7 +90,7 @@ void Player::update(SDL_Rect& camera, bool keyboard[], Mouse mouse) {
     weapon->update(x, y, mouse.x, mouse.y, getAngle(x - camera.x, y - camera.y, mouse.x, mouse.y), mouse.L, flip);
 
     if (weapon->isShooting() == true) {
-        //Effect::getInstance()->shake(camera, 10);
+        Effect::getInstance()->shake(camera, 5);
     }
 
 }
@@ -112,7 +115,7 @@ void Player::render(SDL_Rect& camera) {
         weapon->laserSight(x - camera.x, y - camera.y - 10, m1, m2);
     }
 
-    Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8f);
+    Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8 * scale);
 
     weapon->render(camera);
 
@@ -124,6 +127,10 @@ int Player::getX() {
 
 int Player::getY() {
     return y;
+}
+
+float Player::getScale() {
+    return scale;
 }
 
 int Player::getHP() {
@@ -144,6 +151,10 @@ void Player::addHP(int delta) {
     hp += delta;
     hp = min(hp, 100);
     hp = max(hp, 0);
+}
+
+int Player::getELight() {
+    return energyLight;
 }
 
 string Player::getID() {

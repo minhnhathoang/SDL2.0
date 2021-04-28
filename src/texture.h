@@ -39,8 +39,6 @@ public:
 
     void render(string ID);
 
-    void destroy(string ID);
-
     SDL_Renderer* getRenderer();
 
     void release();

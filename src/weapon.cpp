@@ -13,8 +13,9 @@ Weapon::Weapon() {
     //currentGun = 0;
 }
 
-void Weapon::initGun(int ID) {
+void Weapon::initGun(int ID, float _scale) {
     currentGun = ID;
+    scale = _scale;
     Gun temp;
     switch (ID) {
         case 0:
@@ -255,7 +256,10 @@ void Weapon::reload() {
 
 void Weapon::laserSight(int x1, int y1, int x2, int y2) {
     SDL_SetRenderDrawColor(Texture::getInstance()->getRenderer(), 200, 0, 0, 255);
+    //SDL_SetRenderDrawBlendMode(Texture::getInstance()->getRenderer(), SDL_BLENDMODE_NONE);
     SDL_RenderDrawLine(Texture::getInstance()->getRenderer(), x1, y1, x2, y2);
+
+    //SDL_SetRenderDrawBlendMode(Texture::getInstance()->getRenderer(), SDL_BLENDMODE_NONE);
 }
 
 pair<int, int> Weapon::getAmmunition() {
@@ -264,7 +268,7 @@ pair<int, int> Weapon::getAmmunition() {
 
 void Weapon::render(SDL_Rect& camera) {
     for (auto it = bullets.begin(); it != bullets.end(); ++it) {
-        Texture::getInstance()->render(string(listAmmo[it->projectileID]), it->x - camera.x, it->y - camera.y, 1, it->angle, flip);
+        Texture::getInstance()->render(string(listAmmo[it->projectileID]), it->x - camera.x, it->y - camera.y, 1, it->angle, flip, scale);
     }
 
     int currentFrame = 1;
@@ -272,6 +276,6 @@ void Weapon::render(SDL_Rect& camera) {
         currentFrame = (SDL_GetTicks() * guns[currentGun].frameRate / 1000) % guns[currentGun].nFrames + 1;
     }
 
-    Texture::getInstance()->render(string(listGun[currentGun]), x - camera.x, y - camera.y, currentFrame, angle, flip, guns[currentGun].scaleFrame * 0.8f);
+    Texture::getInstance()->render(string(listGun[currentGun]), x - camera.x, y - camera.y, currentFrame, angle, flip, guns[currentGun].scaleFrame * 0.8f * scale);
     //Texture::getInstance()->render(string(listGun[currentGun]), x - camera.x, y - camera.y, currentFrame, angle, flip, guns[currentGun].scaleFrame * 2.0f);
 }

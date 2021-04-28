@@ -89,17 +89,6 @@ SDL_Texture* Texture::getTexture(string ID) {
     return textureMap[ID].texture;
 }
 
-void Texture::destroy(string ID) {
-    map<string, textureData>::iterator it = textureMap.find(ID);
-
-    if (it == textureMap.end()) {
-        cout << ID << " has not been loaded !\n";
-    } else {
-        SDL_DestroyTexture(it->second.texture);
-        textureMap.erase(it);
-    }
-}
-
 void Texture::release() {
     for (auto it = textureMap.begin(); it != textureMap.end(); ++it) {
         SDL_DestroyTexture(it->second.texture);
