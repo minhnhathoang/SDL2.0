@@ -28,22 +28,17 @@ public:
 
     void addEdge(int u, int v);
 
-
     int getTypeOfTile(int x, int y);
     int getTile(int x, int y);
 
-    void release();
-
-
     vector<vector<Tile>> tiles;
-
     vector<vector<int>> adj;
+
+private:
 
     string mapID;
     int nWidth, nHeight;
-private:
 
 };
-
 
 #endif // __tilemap__h

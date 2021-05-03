@@ -59,6 +59,8 @@
 		<Unit filename="texture.h" />
 		<Unit filename="tilemap.cpp" />
 		<Unit filename="tilemap.h" />
+		<Unit filename="timer.cpp" />
+		<Unit filename="timer.h" />
 		<Unit filename="utils.cpp" />
 		<Unit filename="utils.h" />
 		<Unit filename="weapon.cpp" />

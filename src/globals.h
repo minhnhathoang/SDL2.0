@@ -14,6 +14,13 @@ const int MAX_KEY = 400;
 const double PI = acos(-1);
 
 enum {
+    NONE = -1,
+    SUNNY,
+    RAIN,
+    SNOW,
+};
+
+enum {
     VICTORY,
     DEFEAT
 };
@@ -110,6 +117,7 @@ static const char* listGun[] {
 
 static const char* listAmmo[] {
     "assets/images/bullet/0.png",
+    "assets/images/bullet/1.png",
     "assets/images/bullet/2.png",
     "assets/images/bullet/3.png",
     "assets/images/bullet/4.png",
@@ -118,8 +126,6 @@ static const char* listAmmo[] {
     "assets/images/bullet/7.png",
     "assets/images/bullet/8.png",
     "assets/images/bullet/9.png",
-    "assets/images/bullet/10.png",
-    "assets/images/bullet/11.png",
 };
 
 static const char* listLight[] {
@@ -150,11 +156,6 @@ static const SDL_Color listColor[] = {
     { 243, 246, 88 }
 };
 
-
-struct Mouse {
-    int x, y, L, R;
-    Mouse() : x(-1), y(-1), L(0), R(0) {}
-};
 
 #endif // __globals__h
 

@@ -6,22 +6,12 @@
 #include "structs.h"
 
 static const char* listEffect[] {
-    "assets/images/effect/blood.png",
+    "assets/images/effect/0.png",
     "assets/images/effect/1.png",
     "assets/images/effect/2.png",
     "assets/images/effect/3.png",
-    "assets/images/effect/4.png",
-    "assets/images/effect/5.png",
-    "assets/images/effect/6.png",
-    "assets/images/effect/7.png",
-    "assets/images/effect/8.png",
-    "assets/images/effect/9.png",
-    "assets/images/effect/10.png",
-    "assets/images/effect/11.png",
-    "assets/images/effect/12.png",
-    "assets/images/effect/13.png",
-    "assets/images/effect/14.png",
-    "assets/images/effect/15.png",
+    "assets/images/fire.png",
+    "assets/images/fire1.png",
     "assets/images/effect/16.png",
 };
 
@@ -40,6 +30,7 @@ public:
     Effect();
 
     void add(int ID, int x, int y);
+    void update();
     void render(SDL_Rect camera);
 
     void addDeath(int id, int x, int y, int time, float angle);
@@ -50,21 +41,29 @@ public:
 
     void light(int type, float angle, SDL_Rect camera);
 
-    void update();
 
     void release();
 
 
+    void weather(int type, SDL_Rect camera);
+
+    void addHit(int x, int y, SDL_Color color);
+    void renderHit(SDL_Rect camera);
+
 private:
-    vector<string> deathsID;
 
     vector<Death> deaths;
-    vector<Explosion> explosions;
+    vector<string> deathsID;
 
     vector<int> frames;
     vector<int> times;
     vector<int> rates;
     vector<float> scales;
+    vector<Explosion> explosions;
+
+    vector<SDL_Rect> pRain;
+    vector<Particle> pSnow;
+    vector<Particle> pHit;
 
 };
 

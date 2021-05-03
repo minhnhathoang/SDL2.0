@@ -2,12 +2,14 @@
 #include "tilemap.h"
 #include "game.h"
 
-const int dr[] = { 0, -1, 0, 1 , 1, 1, -1, -1 };
-const int dc[] = { 1, 0, -1, 0 , 1, -1, 1, -1 };
+const int dr[] = { 0, -1, 0, 1, 1, 1, -1, -1 };
+const int dc[] = { 1, 0, -1, 0, 1, -1, 1, -1 };
 
 Map::Map() {
 
     mapID = "assets/images/modmap.png";
+    //mapID = "assets/images/colorful.png";
+    //mapID = "assets/images/modmap222.png";
     //mapID = "assets/images/map.png";
     //mapID = "assets/images/map1.png";
 
@@ -21,10 +23,10 @@ Map::Map() {
 //    nWidth = 122;
 //    nHeight = 61;
 
-
     tiles.resize(nWidth, vector<Tile>(nHeight));
 
     int cnt = 0;
+
     for (int j = 0; j < nHeight; ++j) {
         for (int i = 0; i < nWidth; ++i) {
             int typeTile;
@@ -40,7 +42,8 @@ Map::Map() {
 
     for (int i = 0; i < nWidth; ++i) {
         for (int j = 0; j < nHeight; ++j) {
-            if (tiles[i][j].id <= 0) continue;
+            if (tiles[i][j].id <= 0)
+                continue;
 
             for (int k = 0; k < 2; ++k) {
                 int u = i + dr[k];
@@ -53,7 +56,6 @@ Map::Map() {
             }
         }
     }
-
 }
 
 void Map::addEdge(int u, int v) {
@@ -92,8 +94,4 @@ int Map::getTile(int x, int y) {
         return 0;
     }
     return tiles[u][v].id;
-}
-
-void Map::release() {
-
 }

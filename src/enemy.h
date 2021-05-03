@@ -10,8 +10,8 @@
 class Enemy {
 
 public:
-    Enemy();
 
+    Enemy();
     ~Enemy();
 
     void update(SDL_Rect& camera, Player* player);
@@ -20,18 +20,18 @@ public:
     void findPath(int dst);
 
     int getID();
-
     int getX();
     int getY();
     int getHP();
     void addHP(int delta);
+    float getScale();
 
     Weapon* weapon;
 
 private:
-    int idCrew;
-    int idGun;
 
+    int ID;
+    int gunID;
 
     int nFrames;
 
@@ -42,7 +42,7 @@ private:
 
     int rate;
 
-    bool isMove = 0;
+    bool isMove;
 
     SDL_RendererFlip flip;
 

@@ -1,6 +1,5 @@
 #include "sound.h"
 
-
 Sound::Sound() {
     Mix_VolumeMusic(MIX_MAX_VOLUME);
     music = Mix_LoadMUS("assets/sounds/12am.mp3");
@@ -28,7 +27,7 @@ Sound::Sound() {
     chunks[15] = Mix_LoadWAV("assets/sounds/262_explode2.wav");
     chunks[16] = Mix_LoadWAV("assets/sounds/62_wea_shotgun.wav");
 
-    cout << Mix_GetError() << '\n';
+    cerr << Mix_GetError() << '\n';
 }
 
 void Sound::playMusic() {

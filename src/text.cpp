@@ -1,29 +1,25 @@
 #include "text.h"
+#include "game.h"
 
 Text::Text() {
-
+    renderer = Game::getInstance()->getRenderer();
     mapFont.clear();
-    mapFont[40] = TTF_OpenFont("font/purista.ttf", 40);
-    mapFont[30] = TTF_OpenFont("font/purista.ttf", 30);
 }
 
-void Text::setRenderer(SDL_Renderer* _renderer) {
-    renderer = _renderer;
-}
-
-void Text::render(int sizeFont, string mes, int x, int y, bool neg, double scale) {
+void Text::render(int sizeFont, string mes, int x, int y, bool alignRight) {
 
     if (mapFont.find(sizeFont) == mapFont.end()) {
-        cout << "Add Font " << sizeFont << '\n';
+        cerr << "Add Font " << sizeFont << '\n';
         mapFont[sizeFont] = TTF_OpenFont("font/purista.ttf", sizeFont);
     }
+
     //SDL_Color color = {0, 255, 0};
-    SDL_Color color = {254, 0, 4};
+    //SDL_Color color = {254, 0, 4};
     //SDL_Color color = {13, 1, 255, 255};
     //SDL_Color color = {254, 136, 4};
     //SDL_Color color = {200, 0, 200};
 
-    //SDL_Color color = listColor[4];
+    SDL_Color color = listColor[3];
 
     SDL_Surface* mesSurface = TTF_RenderText_Blended(mapFont[sizeFont], mes.c_str(), color);
 
@@ -33,10 +29,8 @@ void Text::render(int sizeFont, string mes, int x, int y, bool neg, double scale
 
     TTF_SizeText(mapFont[sizeFont], mes.c_str(), &w, &h);
 
-    w *= scale;
-    h *= scale;
-
-    if (neg) x -= w;
+    if (alignRight)
+        x -= w;
 
     SDL_Rect dst =  { x, y, w, h };
 

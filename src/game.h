@@ -4,9 +4,6 @@
 #include "header.h"
 
 #include "enemy.h"
-#include "text.h"
-#include "sound.h"
-#include "effect.h"
 #include "item.h"
 
 class Game {
@@ -38,8 +35,6 @@ public:
     void quit();
 
     bool running();
-    bool restarting();
-
 
     void updateCamera();
 
@@ -57,11 +52,10 @@ private:
     SDL_Renderer* renderer;
     SDL_Rect camera;
 
-
-    bool isRestarting = 0;
     bool isRunning;
     int status;
     int currentLight;
+    int currentWeather;
 
 };
 

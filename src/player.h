@@ -20,7 +20,7 @@ public:
     }
 
     Player();
-
+    ~Player();
 
     void init();
     void update(SDL_Rect& camera, bool key[], Mouse mouse);
@@ -34,18 +34,28 @@ public:
     int getCoin();
     int getELight();
     void addHP(int delta);
+    void addOxy(int delta);
+
+    string getName();
+    void setName(string _name);
+
+    string enterName(int minSize, int maxSize, bool show, int fontSize, int x, int y);
+
+    bool isShooting();
 
     string getID();
 
-    int getIDGun();
+    int getGunID();
 
     pair<int, int> getAmmunition();
 
     Weapon* weapon;
-    int idCrew;
     int energyLight;
+
 private:
-    int idGun;
+    int ID;
+    string name;
+    int gunID;
 
     int nFrames;
 
@@ -53,7 +63,7 @@ private:
     int dx, dy;
     int moveSpeed;
 
-    int hp, oxy, coin;
+    int hp, oxy;
 
     int rate;
 

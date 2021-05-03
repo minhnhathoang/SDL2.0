@@ -2,7 +2,7 @@
 #include "game.h"
 
 Texture::Texture() {
-    //renderer = Game::getIn->getRenderer();
+    renderer = Game::getInstance()->getRenderer();
 }
 
 void Texture::load(string ID, int row, int col) {
@@ -16,8 +16,7 @@ void Texture::load(string ID, int row, int col) {
     u.texture = IMG_LoadTexture(renderer, ID.c_str());
 
     if (u.texture == nullptr) {
-        cout << ID << " ";
-        logSDLError("Load Texture");
+        logSDLError("Load Texture " + ID);
     }
 
     SDL_QueryTexture(u.texture, 0, 0, &u.width, &u.height);
@@ -29,9 +28,6 @@ void Texture::load(string ID, int row, int col) {
     u.row = row;
 
     textureMap[ID] = u;
-
-    // cout << textureMap.size() << endl;
-
 }
 
 void Texture::render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip, float scale, SDL_Point* point) {
@@ -41,7 +37,8 @@ void Texture::render(string ID, int x, int y, int currentFrames, float angle, SD
     textureData& temp = textureMap[ID];
 
     src.x = (currentFrames % temp.col);
-    if (src.x == 0) src.x = temp.col;
+    if (src.x == 0)
+        src.x = temp.col;
     src.x = (src.x - 1) * temp.width;
     src.y = (ceil(currentFrames * 1.0f / temp.col) - 1) * temp.height;
     src.w = temp.width;
@@ -57,7 +54,6 @@ void Texture::render(string ID, int x, int y, int currentFrames, float angle, SD
 
 void Texture::render(string ID, SDL_Rect src, SDL_Rect dst) {
     textureData& temp = textureMap[ID];
-
     SDL_RenderCopy(renderer, temp.texture, &src, &dst);
 }
 
@@ -74,11 +70,7 @@ void Texture::render(string ID, int x, int y) {
 void Texture::render(string ID) {
     textureData& temp = textureMap[ID];
 
-    SDL_RenderCopy(renderer, temp.texture, 0, 0);
-}
-
-void Texture::setRenderer(SDL_Renderer* _renderer) {
-    renderer = _renderer;
+    SDL_RenderCopy(renderer, temp.texture, NULL, NULL);
 }
 
 SDL_Renderer* Texture::getRenderer() {

@@ -6,6 +6,12 @@
 #include "tilemap.h"
 #include "texture.h"
 
+struct FLight {
+    int x, y;
+    double angle;
+    int time;
+};
+
 class Item {
 
 public:
@@ -14,7 +20,7 @@ public:
     void update(bool keyboard[]);
     void render(SDL_Rect camera);
 
-    void randomPosition(int &x, int &y);
+    void randomPosition(int &x, int &y, int distance = -1);
 
 private:
 
@@ -22,11 +28,10 @@ private:
     vector<SDL_Point> listBoxBullet;
 
     string flashlightID;
-    vector<SDL_Point> listFlashlight;
+    vector<FLight> listFlashlight;
 
     string medkitID;
     vector<SDL_Point> listMedkit;
-
 
 };
 

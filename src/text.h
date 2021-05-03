@@ -20,16 +20,12 @@ public:
 
     Text();
 
-    void setRenderer(SDL_Renderer* _renderer);
-
-    void render(int sizeFont, string mes, int x, int y, bool neg = 0, double scale = 1);
+    void render(int sizeFont, string mes, int x, int y, bool alignRight = 0);
 
     void release();
 
 private:
 
-    TTF_Font* font;
-    TTF_Font* font30;
     SDL_Renderer* renderer;
 };
 

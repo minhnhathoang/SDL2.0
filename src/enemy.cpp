@@ -4,24 +4,25 @@
 #include "algorithm"
 
 Enemy::Enemy() {
-    rate = 30;
+    while (true) {
+        x = randUint(4000);
+        y = randUint(7000);
+        if (Map::getInstance()->getTypeOfTile(x, y + scale * 40) == 1 &&
+                getDistance(Player::getInstance()->getX(), Player::getInstance()->getY(), x, y) > 2000)
+            break;
+    }
 
-    moveSpeed = randInt(1, 3);
+    rate = 30;
+    moveSpeed = randInt(1, 4);
 
     hp = 100;
     scale = randF(1, 2);
 
-    while (true) {
-        x = randUint(4000);
-        y = randUint(7000);
-        if (Map::getInstance()->getTypeOfTile(x, y + scale * 40) == 1) break;
-    }
-
     nFrames = 25;
 
-    idCrew = randUint(MAX_CREW - 1);
+    ID = randUint(MAX_CREW - 1);
 
-    Texture::getInstance()->load(string(listCrew[idCrew]), 1, 25);
+    Texture::getInstance()->load(listCrew[ID], 1, 25);
 
     flip = SDL_FLIP_NONE;
 
@@ -32,12 +33,12 @@ Enemy::Enemy() {
 
 
     weapon = new Weapon();
-    idGun = randUint(7);
-    weapon->initGun(idGun, scale);
+    gunID = randUint(7);
+    weapon->initGun(gunID, scale);
 }
 
 Enemy::~Enemy() {
-
+    delete weapon;
 }
 
 void Enemy::update(SDL_Rect& camera, Player* player) {
@@ -80,21 +81,22 @@ void Enemy::render(SDL_Rect camera) {
         currentFrame = (SDL_GetTicks() * rate / 1000) % (nFrames - 1) + 1;
     }
 
-    Texture::getInstance()->render(string(listCrew[idCrew]), x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8 * scale);
+    Texture::getInstance()->render(listCrew[ID], x - camera.x, y - camera.y, currentFrame, 0, flip, 0.8 * scale);
     weapon->render(camera);
 }
 
 void Enemy::findPath(int dst) {
     int src = Map::getInstance()->getTile(x, y + scale * 40);
 
-    if (dst == src) return;
+    if (dst == src)
+        return;
 
     queue<int> q;
     vector<int> vst(Map::getInstance()->adj.size() + 10, 0);
 
     while (!q.empty()) q.pop();
-    q.push(dst);
 
+    q.push(dst);
     vst[dst] = 1;
 
     while (!q.empty()) {
@@ -138,5 +140,9 @@ int Enemy::getHP() {
 }
 
 int Enemy::getID() {
-    return idCrew;
+    return ID;
+}
+
+float Enemy::getScale() {
+    return scale;
 }

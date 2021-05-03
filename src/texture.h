@@ -26,10 +26,9 @@ public:
         return instance;
     }
 
-    void setRenderer(SDL_Renderer* _renderer);
     SDL_Texture* getTexture(string ID);
 
-    void load(string ID, int row, int col);
+    void load(string ID, int row = 1, int col = 1);
 
     void render(string ID, int x, int y, int currentFrames, float angle, SDL_RendererFlip flip = SDL_FLIP_NONE, float scale = 1.0f, SDL_Point* point = nullptr);
 

@@ -1,5 +1,6 @@
 #include "header.h"
 #include "game.h"
+#include "text.h"
 #include "texture.h"
 #include "collision.h"
 
@@ -8,7 +9,7 @@ Game::Game() {
         logSDLError("SDL_Init");
     }
 
-    window = SDL_CreateWindow("SAS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
+    window = SDL_CreateWindow("SAS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         logSDLError("Create Window");
     }
@@ -23,30 +24,20 @@ Game::Game() {
 
     assert(TTF_Init() == 0 && TTF_GetError());
     if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, SDL_MIX_MAXVOLUME) < 0) {
-        cout << Mix_GetError() << '\n';
+        cerr << Mix_GetError() << '\n';
     }
-
-    cout << "SDL initialized successfully !" << '\n';
+    cerr << "SDL initialized successfully !" << '\n';
 
     SDL_ShowCursor(true);
-
-    Texture::getInstance()->setRenderer(renderer);
-    Text::getInstance()->setRenderer(renderer);
-
-    init();
-
-    item = new Item();
 }
 
 void Game::init() {
-
     isRunning = true;
-    isRestarting = false;
     status = -1;
 
-    camera = { 0, 0, 0, 0 };
+    item = new Item();
 
-    Player::getInstance()->init();
+    camera = { 0, 0, 0, 0 };
 
     enemies.clear();
 
@@ -90,6 +81,9 @@ void Game::menu(int type) {
                                 flag = true;
                                 if (curSelection == QUIT) {
                                     this->quit();
+                                } else {
+                                    this->init();
+                                    Player::getInstance()->init();
                                 }
                                 break;
                             default:
@@ -99,9 +93,11 @@ void Game::menu(int type) {
                         break;
                 }
             }
-            if (flag == true) break;
             SDL_RenderPresent(renderer);
             SDL_RenderClear(renderer);
+            if (flag == true) {
+                break;
+            }
         }
     } else {
         Texture::getInstance()->load("assets/images/menu/continue.png", 1, 1);
@@ -135,8 +131,8 @@ void Game::menu(int type) {
                                 if (curSelection == CONTINUE) {
 
                                 } else if (curSelection == RESTART) {
-                                    isRestarting = true;
-                                    isRunning = false;
+                                    this->init();
+                                    Player::getInstance()->init();
                                 } else if (curSelection == QUIT) {
                                     this->quit();
                                 }
@@ -147,11 +143,14 @@ void Game::menu(int type) {
                         break;
                 }
             }
-            if (flag == true)
-                break;
             SDL_RenderPresent(renderer);
+            SDL_RenderClear(renderer);
+            if (flag == true) {
+                break;
+            }
         }
     }
+    SDL_RenderPresent(renderer);
 }
 
 void Game::handle() {
@@ -199,10 +198,13 @@ void Game::handle() {
         menu(1);
         keyboard[SDL_SCANCODE_ESCAPE] = 0;
     }
-
 }
 
 void Game::update() {
+
+    while (enemies.size() <= 10) {
+        enemies.emplace_back(new Enemy());
+    }
 
     if (currentLight == FLASHLIGHT) {
         Player::getInstance()->energyLight--;
@@ -216,12 +218,11 @@ void Game::update() {
 
     Effect::getInstance()->update();
 
-
     checkCollision(Player::getInstance(), enemies);
 
     for (auto it = enemies.begin(); it != enemies.end(); ) {
         if ((*it)->getHP() <= 0) {
-            Effect::getInstance()->addDeath((*it)->getID(), (*it)->getX(), (*it)->getY(), 1000, 0);
+            Effect::getInstance()->addDeath((*it)->getID(), (*it)->getX(), (*it)->getY(), 1000, (*it)->getScale());
             enemies.erase(it);
         } else {
             (*it)->update(camera, Player::getInstance());
@@ -239,6 +240,8 @@ void Game::update() {
     }
 
     item->update(keyboard);
+
+    Player::getInstance()->addOxy(-1);
 }
 
 void Game::render() {
@@ -254,7 +257,7 @@ void Game::render() {
         Player::getInstance()->render(camera);
         Effect::getInstance()->light(currentLight, getAngle(Player::getInstance()->getX() - camera.x, Player::getInstance()->getY() - camera.y, mouse.x, mouse.y), camera);
         Effect::getInstance()->render(camera);
-        Effect::getInstance()->redScreen(-1);
+        Effect::getInstance()->redScreen(0);
         renderHUD();
     } else {
         Map::getInstance()->render(camera);
@@ -266,7 +269,18 @@ void Game::render() {
         Effect::getInstance()->render(camera);
         endgame();
     }
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+
+    static int u = 0;
+    ++u;
+    if (u % 1500 == 0) {
+        currentWeather = randInt(-1, 2);
+    }
+    Effect::getInstance()->weather(currentWeather, camera);
+
+    Effect::getInstance()->renderHit(camera);
+
     SDL_RenderPresent(renderer);
 }
 
@@ -284,18 +298,18 @@ void Game::renderHUD() {
     SDL_RenderFillRect(renderer, &dst);
 
     SDL_SetRenderDrawColor(renderer, 53, 158, 187, 255);
-    dst = { 45, 731, Player::getInstance()->getOxy() * 321 / 100, 19 };
+    dst = { 45, 731, Player::getInstance()->getOxy() * 321 / 10000, 19 };
     SDL_RenderFillRect(renderer, &dst);
 
     auto [u, v] = Player::getInstance()->getAmmunition();
 
-    Text::getInstance()->render(40, to_string(u), 1260, 730 - 20 + 3, 1, 1);
-    Text::getInstance()->render(40, "/", 1275, 727, 1, 0.6);
-    Text::getInstance()->render(40, to_string(v), 1280, 736 - 10, 0, 0.7);
+    Text::getInstance()->render(40, to_string(u), 1260, 730 - 20 + 3, 1);
+    Text::getInstance()->render(20, "/", 1275, 735, 1);
+    Text::getInstance()->render(30, to_string(v), 1280, 736 - 10, 0);
 
     if (currentLight == FLASHLIGHT) {
         string num_str = to_string(float(Player::getInstance()->getELight()) / 100);
-        Text::getInstance()->render(30, "Light " + num_str.substr(0, num_str.find('.') + 3), SCREEN_WIDTH / 2 - 70, 720);
+        Text::getInstance()->render(20, "Flashlight " + num_str.substr(0, num_str.find('.') + 3), SCREEN_WIDTH / 2 - 70, 720);
     }
 }
 
@@ -332,20 +346,14 @@ bool Game::running() {
     return isRunning;
 }
 
-bool Game::restarting() {
-    return isRestarting;
-}
-
 void Game::quit() {
     isRunning = false;
-    isRestarting = false;
 }
 
 void Game::clean() {
     Texture::getInstance()->release();
     Sound::getInstance()->release();
     Text::getInstance()->release();
-    Map::getInstance()->release();
     Effect::getInstance()->release();
 
     while (enemies.size() > 0) {

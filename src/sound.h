@@ -5,8 +5,6 @@
 
 class Sound {
 
-
-
 public:
 
     static Sound* getInstance() {

@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1615469950 source:c:\users\amin\desktop\projectgame\src\debug.cpp
-	"header.h"
+1619978764 source:c:\users\amin\desktop\projectgame\src\debug.cpp
+	<iostream>
+	"SDL.h"
 	"debug.h"
 
-1619572198 c:\users\amin\desktop\projectgame\src\header.h
+1620025269 c:\users\amin\desktop\projectgame\src\header.h
 	<algorithm>
 	<iostream>
 	<chrono>
@@ -21,7 +22,8 @@
 	"utils.h"
 	"debug.h"
 
-1615525180 c:\users\amin\desktop\projectgame\src\debug.h
+1619978278 c:\users\amin\desktop\projectgame\src\debug.h
+	<string>
 
 1615426343 source:c:\users\amin\desktop\projectgame\src\init.cpp
 	"header.h"
@@ -34,96 +36,96 @@
 	"header.h"
 	"utils.h"
 
-1619542325 c:\users\amin\desktop\projectgame\src\utils.h
+1620036050 c:\users\amin\desktop\projectgame\src\utils.h
 
-1619576354 source:c:\users\amin\desktop\projectgame\src\text.cpp
+1620044224 source:c:\users\amin\desktop\projectgame\src\text.cpp
 	"text.h"
+	"game.h"
 
-1619575986 c:\users\amin\desktop\projectgame\src\text.h
+1620025197 c:\users\amin\desktop\projectgame\src\text.h
 	"header.h"
 	"texture.h"
 
-1619538809 source:c:\users\amin\desktop\projectgame\src\texture.cpp
+1620027057 source:c:\users\amin\desktop\projectgame\src\texture.cpp
 	"texture.h"
 	"game.h"
 
-1619570819 c:\users\amin\desktop\projectgame\src\globals.h
+1620061688 c:\users\amin\desktop\projectgame\src\globals.h
 
-1619576290 source:c:\users\amin\desktop\projectgame\src\game.cpp
+1620057620 source:c:\users\amin\desktop\projectgame\src\game.cpp
 	"header.h"
 	"game.h"
+	"text.h"
 	"texture.h"
 	"collision.h"
 
-1619570771 c:\users\amin\desktop\projectgame\src\game.h
+1620056348 c:\users\amin\desktop\projectgame\src\game.h
 	"header.h"
 	"enemy.h"
-	"text.h"
-	"sound.h"
-	"effect.h"
 	"item.h"
 
-1619548914 source:c:\users\amin\desktop\projectgame\src\main.cpp
+1620057015 source:c:\users\amin\desktop\projectgame\src\main.cpp
 	"game.h"
 
-1619540575 source:c:\users\amin\desktop\projectgame\src\sound.cpp
+1619978640 source:c:\users\amin\desktop\projectgame\src\sound.cpp
 	"sound.h"
 
-1619057803 c:\users\amin\desktop\projectgame\src\sound.h
+1620034182 c:\users\amin\desktop\projectgame\src\sound.h
 	"header.h"
 
-1619544460 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
+1620044064 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
 	"header.h"
 	"tilemap.h"
 	"game.h"
 
-1619538817 c:\users\amin\desktop\projectgame\src\texture.h
+1620015009 c:\users\amin\desktop\projectgame\src\texture.h
 	"header.h"
 
-1619571746 source:c:\users\amin\desktop\projectgame\src\player.cpp
+1620065953 source:c:\users\amin\desktop\projectgame\src\player.cpp
 	"player.h"
 	"utils.h"
 	"tilemap.h"
 	"game.h"
+	"text.h"
 
-1619571331 c:\users\amin\desktop\projectgame\src\player.h
+1620064191 c:\users\amin\desktop\projectgame\src\player.h
 	"texture.h"
 	"tilemap.h"
 	"weapon.h"
 	"sound.h"
 	"effect.h"
 
-1619541052 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
+1620065319 source:c:\users\amin\desktop\projectgame\src\weapon.cpp
 	"header.h"
 	"utils.h"
 	"weapon.h"
-	<algorithm>
 	"effect.h"
 	"sound.h"
+	<algorithm>
 
-1619541016 c:\users\amin\desktop\projectgame\src\weapon.h
+1620065138 c:\users\amin\desktop\projectgame\src\weapon.h
 	"header.h"
 	"texture.h"
 	"structs.h"
 
-1619057769 c:\users\amin\desktop\projectgame\src\tilemap.h
+1620066075 c:\users\amin\desktop\projectgame\src\tilemap.h
 	"header.h"
 	"texture.h"
 
-1619570444 source:c:\users\amin\desktop\projectgame\src\enemy.cpp
+1620064680 source:c:\users\amin\desktop\projectgame\src\enemy.cpp
 	"enemy.h"
 	"utils.h"
 	"tilemap.h"
 	"algorithm"
 
-1619541098 c:\users\amin\desktop\projectgame\src\enemy.h
+1620064519 c:\users\amin\desktop\projectgame\src\enemy.h
 	"header.h"
 	"tilemap.h"
 	"weapon.h"
 	"effect.h"
 	"player.h"
 
-1619573253 source:c:\users\amin\desktop\projectgame\src\collision.cpp
+1620062825 source:c:\users\amin\desktop\projectgame\src\collision.cpp
 	"collision.h"
 	"effect.h"
 
@@ -132,26 +134,26 @@
 	"enemy.h"
 	"tilemap.h"
 
-1619570682 source:c:\users\amin\desktop\projectgame\src\effect.cpp
+1620064344 source:c:\users\amin\desktop\projectgame\src\effect.cpp
 	"effect.h"
 	"header.h"
 	"player.h"
 
-1619570432 c:\users\amin\desktop\projectgame\src\effect.h
+1620063296 c:\users\amin\desktop\projectgame\src\effect.h
 	"header.h"
 	"texture.h"
 	"structs.h"
 
-1619516293 c:\users\amin\desktop\projectgame\src\structs.h
+1620057246 c:\users\amin\desktop\projectgame\src\structs.h
 	"texture.h"
 
-1619519731 c:\users\amin\desktop\projectgame\src\item.h
+1620035118 c:\users\amin\desktop\projectgame\src\item.h
 	"header.h"
 	"player.h"
 	"tilemap.h"
 	"texture.h"
 
-1619538937 source:c:\users\amin\desktop\projectgame\src\item.cpp
+1620026359 source:c:\users\amin\desktop\projectgame\src\item.cpp
 	"item.h"
 
 1608572791 c:\users\amin\desktop\projectgame\src\sdl2\sdl.h
@@ -542,4 +544,19 @@
 	"SDL.h"
 	"begin_code.h"
 	"close_code.h"
+
+1619878329 source:c:\users\amin\desktop\projectgame\src\boss.cpp
+	"boss.h"
+	"player.h"
+	"texture.h"
+
+1619800046 c:\users\amin\desktop\projectgame\src\boss.h
+	"header.h"
+	"structs.h"
+
+1619863403 source:c:\users\amin\desktop\projectgame\src\timer.cpp
+	"header.h"
+	"timer.h"
+
+1619978397 c:\users\amin\desktop\projectgame\src\timer.h
 

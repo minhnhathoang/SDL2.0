@@ -1,6 +1,8 @@
 #ifndef __debug__h
 #define __debug__h
 
-void logSDLError(const char* mes);
+#include <string>
+
+void logSDLError(std::string mes);
 
 #endif // __debug__h
