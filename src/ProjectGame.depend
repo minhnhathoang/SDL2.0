@@ -52,7 +52,7 @@
 
 1620061688 c:\users\amin\desktop\projectgame\src\globals.h
 
-1620057620 source:c:\users\amin\desktop\projectgame\src\game.cpp
+1620066085 source:c:\users\amin\desktop\projectgame\src\game.cpp
 	"header.h"
 	"game.h"
 	"text.h"
@@ -73,7 +73,7 @@
 1620034182 c:\users\amin\desktop\projectgame\src\sound.h
 	"header.h"
 
-1620044064 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
+1620066068 source:c:\users\amin\desktop\projectgame\src\tilemap.cpp
 	"header.h"
 	"tilemap.h"
 	"game.h"
