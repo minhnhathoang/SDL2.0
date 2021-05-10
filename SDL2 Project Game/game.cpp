@@ -55,7 +55,7 @@ void Game::init() {
     Texture::getInstance()->load("assets/images/bar.png", 1, 1);
     Item::getInstance()->init();
 
-    score = 10000;
+    score = 0;
 
 }
 
