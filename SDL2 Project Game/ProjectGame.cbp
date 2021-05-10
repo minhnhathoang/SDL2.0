@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="projectGame" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/projectGame" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/projectGame" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="SDL2/SDL2.dll" />
+		<Unit filename="SDL2/SDL2_image.dll" />
+		<Unit filename="SDL2/SDL2_ttf.dll" />
+		<Unit filename="SDL2/libfreetype-6.dll" />
+		<Unit filename="SDL2/libjpeg-9.dll" />
+		<Unit filename="SDL2/libmpg123-0.dll" />
+		<Unit filename="SDL2/libpng16-16.dll" />
+		<Unit filename="SDL2/libtiff-5.dll" />
+		<Unit filename="SDL2/libwebp-7.dll" />
+		<Unit filename="SDL2/zlib1.dll" />
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
+		<Unit filename="debug.cpp" />
+		<Unit filename="effect.cpp" />
+		<Unit filename="effect.h" />
+		<Unit filename="enemy.cpp" />
+		<Unit filename="enemy.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="globals.h" />
+		<Unit filename="header.h" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
+		<Unit filename="sound.cpp" />
+		<Unit filename="sound.h" />
+		<Unit filename="structs.h" />
+		<Unit filename="text.cpp" />
+		<Unit filename="text.h" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.h" />
+		<Unit filename="tilemap.cpp" />
+		<Unit filename="tilemap.h" />
+		<Unit filename="utils.cpp" />
+		<Unit filename="utils.h" />
+		<Unit filename="weapon.cpp" />
+		<Unit filename="weapon.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
