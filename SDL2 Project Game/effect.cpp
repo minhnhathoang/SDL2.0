@@ -117,14 +117,16 @@ void Effect::shake(SDL_Rect& camera, int _time) {
 }
 
 void Effect::alert(SDL_Color color) {
+    static SDL_Texture* shadow;
     static int time = 0;
     ++time;
     int u = time % 100;
     if (u <= 40) {
 
-        SDL_Texture* shadow = SDL_CreateTexture(Texture::getInstance()->getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
-        SDL_SetTextureBlendMode(shadow, SDL_BLENDMODE_MOD);
-
+        if (shadow == nullptr) {
+            shadow = SDL_CreateTexture(Texture::getInstance()->getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, SCREEN_WIDTH, SCREEN_HEIGHT);
+            SDL_SetTextureBlendMode(shadow, SDL_BLENDMODE_MOD);
+        }
 
         SDL_SetRenderTarget(Texture::getInstance()->getRenderer(), shadow);
 
@@ -133,9 +135,13 @@ void Effect::alert(SDL_Color color) {
 
         SDL_SetRenderTarget(Texture::getInstance()->getRenderer(), nullptr);
         SDL_RenderCopy(Texture::getInstance()->getRenderer(), shadow, NULL, NULL);
-        SDL_DestroyTexture(shadow);
         if (u == 0) {
             Sound::getInstance()->playChunks(10, 1);
+        }
+    } else {
+        if (shadow != nullptr) {
+            SDL_DestroyTexture(shadow);
+            shadow = nullptr;
         }
     }
 }
@@ -245,7 +251,7 @@ void Effect::weather(int type, SDL_Rect camera) {
             static int timer = 0;
             ++timer;
             if (timer % 10 == 0) {
-                int nB = randInt(1, 30);
+                int nB = randInt(1, 20);
                 for (int i = 0; i <= nB; ++i) {
                     float angle = randInt(50, 150);
                     Particle u;

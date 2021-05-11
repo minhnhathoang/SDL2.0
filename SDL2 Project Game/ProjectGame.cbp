@@ -32,16 +32,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="SDL2/SDL2.dll" />
-		<Unit filename="SDL2/SDL2_image.dll" />
-		<Unit filename="SDL2/SDL2_ttf.dll" />
-		<Unit filename="SDL2/libfreetype-6.dll" />
-		<Unit filename="SDL2/libjpeg-9.dll" />
-		<Unit filename="SDL2/libmpg123-0.dll" />
-		<Unit filename="SDL2/libpng16-16.dll" />
-		<Unit filename="SDL2/libtiff-5.dll" />
-		<Unit filename="SDL2/libwebp-7.dll" />
-		<Unit filename="SDL2/zlib1.dll" />
 		<Unit filename="collision.cpp" />
 		<Unit filename="collision.h" />
 		<Unit filename="debug.cpp" />

@@ -48,9 +48,10 @@ void Item::update(bool keyboard[]) {
 
         while (listItem[i].size() < 1) {
             Data temp;
-            randomPosition(temp.x, temp.y, randInt(3000, 4500));
-            temp.flip = randUint(1);
-            listItem[i].push_back(temp);
+            if (randomPosition(temp.x, temp.y, randInt(3000, 4500))) {
+                temp.flip = randUint(1);
+                listItem[i].push_back(temp);
+            }
         }
 
         for (auto it = listItem[i].begin(); it != listItem[i].end(); ) {
@@ -148,14 +149,17 @@ void Item::renderTab(Mouse mouse) {
     }
 }
 
-void Item::randomPosition(int &x, int &y, int distance) {
-    while (true) {
+bool Item::randomPosition(int &x, int &y, int distance) {
+    int cnt = 0;
+    while (cnt < 10) {
         x = randUint(6100);
         y = randUint(4460);
         if (Map::getInstance()->getTypeOfTile(x, y) == 1 &&
                 getDistance(Player::getInstance()->getX(), Player::getInstance()->getY(), x, y) > distance)
-            break;
+            return true;
+        ++cnt;
     }
+    return false;
 }
 
 void Item::radar(Player* player, vector<Enemy*>& enemies, int x, int y, float radius, float scale) {

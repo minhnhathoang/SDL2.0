@@ -37,7 +37,7 @@ public:
     void render(SDL_Rect camera, Mouse mouse);
     void renderTab(Mouse mouse);
 
-    void randomPosition(int &x, int &y, int distance = -1);
+    bool randomPosition(int &x, int &y, int distance = -1);
 
 
     void radar(Player* player, vector<Enemy*>& enemies, int x, int y, float radius, float scale);

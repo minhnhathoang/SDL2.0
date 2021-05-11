@@ -145,6 +145,8 @@ void Enemy::findPath(int dst) {
 }
 
 bool Enemy::testShot() {
+    if (Player::getInstance()->getHP() <= 0 || Player::getInstance()->getOxy() <= 0) return false;
+
     Bullet bullet;
     bullet.angle = getAngle(x, y, Player::getInstance()->getX(), Player::getInstance()->getY());
 

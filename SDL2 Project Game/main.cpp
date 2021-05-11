@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
             SDL_Delay(1000 / FPS - frameTime);
         }
 
-        cerr << frameTime << endl;
+        // cerr << frameTime << endl;
     }
 
     Game::getInstance()->clean();

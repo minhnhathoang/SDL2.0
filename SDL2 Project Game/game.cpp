@@ -55,8 +55,7 @@ void Game::init() {
     Texture::getInstance()->load("assets/images/bar.png", 1, 1);
     Item::getInstance()->init();
 
-    score = 10000;
-
+    score = 0;
 }
 
 void Game::menu(int type) {
@@ -226,11 +225,20 @@ void Game::update() {
         updateCamera();
     }
 
+    if (currentWeather == SUNNY) {
+        Player::getInstance()->eLight += 3;
+    }
     if (currentLight == FLASHLIGHT && Player::getInstance()->eLight > 0) {
         --Player::getInstance()->eLight;
     }
-    if (currentWeather == SUNNY) {
-        Player::getInstance()->eLight += 3;
+    if (time % 2000 == 0) {
+        currentLight = randInt(NONE, FLASHLIGHT);
+    }
+    if (time % 1500 == 0) {
+        currentWeather = randInt(NONE, SNOW);
+    }
+    if (Player::getInstance()->getELight() <= 0 && currentLight == FLASHLIGHT) {
+        currentLight = DARK;
     }
 
     if (time % 4000 == 0) {
@@ -292,6 +300,9 @@ void Game::update() {
     if (score > 1000) {
         Player::getInstance()->lockGuns[11] = true;
     }
+    if (score > 5000) {
+        status = VICTORY;
+    }
 }
 
 void Game::render() {
@@ -320,23 +331,11 @@ void Game::render() {
         this->endgame();
     }
 
-    if (time % 2000 == 0) {
-        currentLight = randInt(NONE, DARK);
-    }
-
-    if (time % 1500 == 0) {
-        currentWeather = randInt(NONE, SNOW);
-    }
-
-    if (currentLight != NONE && currentWeather == SUNNY) {
-        currentWeather = NONE;
-    }
 
     Effect::getInstance()->renderHit(camera);
 
     Effect::getInstance()->weather(currentWeather, camera);
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
     if (status == -1) {
         if (Player::getInstance()->getHP() <= 20) {
@@ -351,6 +350,7 @@ void Game::render() {
         Text::getInstance()->render(30, "Score " + to_string(score), SCREEN_WIDTH / 2, 20, CENTER);
     }
 
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderPresent(renderer);
 }
 
