@@ -56,10 +56,7 @@ void Game::init() {
     Item::getInstance()->init();
 
     score = 0;
-<<<<<<< HEAD
-=======
 
->>>>>>> 7d9a1d0a3b98c8478cb8e198d80a619272194575
 }
 
 void Game::menu(int type) {
