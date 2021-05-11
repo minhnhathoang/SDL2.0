@@ -1,6 +1,8 @@
 # SAS game
 
-Survival Shot 2D - Project game giữa kì K65 UET-VNU được viết bằng C++ và thư viện SDL2_
+Survival Shot 2D - Project game giữa kì K65 UET-VNU được viết bằng C++ và thư viện SDL2
+
+[Link youtube](https://www.youtube.com/watch?v=Z8yhOANcuP4&t=1127s).
 
 ## Plugins
  Thư viện SDL 2 bao gồm:
